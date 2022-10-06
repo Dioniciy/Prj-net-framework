@@ -8,11 +8,11 @@ namespace Prj_net_framework
 {
     internal interface ISorter
     {
-        void Sort(int[] data, int lenD);
+        void Sort(int[] data, uint lenD);
     }
     class SelectionSorter : ISorter
     {
-        public void Sort(int[] data, int lenD)
+        public void Sort(int[] data, uint lenD)
         {
             int j = 0;
             int tmp = 0;
@@ -34,12 +34,12 @@ namespace Prj_net_framework
     }
     class BubbleSorter : ISorter
     {
-        public void Sort(int[] data, int lenD)
+        public void Sort(int[] data, uint lenD)
         {
             int tmp = 0;
             for (int i = 0; i < lenD; i++)
             {
-                for (int j = (lenD - 1); j >= (i + 1); j--)
+                for (uint j = (lenD - 1); j >= (i + 1); j--)
                 {
                     if (data[j] < data[j - 1])
                     {
@@ -53,7 +53,7 @@ namespace Prj_net_framework
     }
     class InsertionSorter : ISorter
     {
-        public void Sort(int[] data, int lenD)
+        public void Sort(int[] data, uint lenD)
         {
             int key = 0;
             int i = 0;
@@ -72,12 +72,12 @@ namespace Prj_net_framework
     }
     class MergeSorter : ISorter
     {
-        public void Sort(int[] data, int lenD)
+        public void Sort(int[] data, uint lenD)
         {
             if (lenD > 1)
             {
-                int middle = lenD / 2;
-                int rem = lenD - middle;
+                uint middle = lenD / 2;
+                uint rem = lenD - middle;
                 int[] L = new int[middle];
                 int[] R = new int[rem];
                 for (int i = 0; i < lenD; i++)
@@ -96,7 +96,7 @@ namespace Prj_net_framework
                 merge(data, lenD, L, middle, R, rem);
             }
         }
-        void merge(int[] merged, int lenD, int[] L, int lenL, int[] R, int lenR)
+        void merge(int[] merged, uint lenD, int[] L, uint lenL, int[] R, uint lenR)
         {
             int i = 0;
             int j = 0;
@@ -134,12 +134,12 @@ namespace Prj_net_framework
 
     class QuickSorter : ISorter
     {
-        public void Sort(int[] data, int len)
+        public void Sort(int[] data, uint len)
         {
-            int lenD = len;
+            uint lenD = len;
             int pivot = 0;
-            int ind = lenD / 2;
-            int i, j = 0, k = 0;
+            uint ind = lenD / 2;
+            uint i, j = 0, k = 0;
             if (lenD > 1)
             {
                 int[] L = new int[lenD];

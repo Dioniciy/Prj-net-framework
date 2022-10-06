@@ -16,29 +16,67 @@ namespace Prj_net_framework
             ISorter insertionSorter = new InsertionSorter();
             ISorter mergeSorter = new MergeSorter();
             ISorter quickSorter = new QuickSorter();
-            
+            string readBuffer;
         while (true)
         {   
-            Console.Write("Enter lengh of array: ");
-            int lng = Convert.ToInt32(Console.ReadLine());
+           
+            uint lng;
+           Console.Write("Enter lengh of array: ");
+            while(true)
+            {   
+                readBuffer = Console.ReadLine();
+                if(UInt32.TryParse(readBuffer,out lng))
+                {
+                    if (lng != 0)
+                    { break; }
+                }
+                Console.Write("Enter lengh of array again: ");
+            }
+           // lng = Convert.ToUInt32(readBuffer);
+
             Console.Write("Enter height of array: ");
-            int height = Convert.ToInt32(Console.ReadLine());
+            uint height;
+            while (true)
+            {
+                readBuffer = Console.ReadLine();
+                if (UInt32.TryParse(readBuffer, out height))
+                {
+                    if (height != 0)
+                    { break; }
+                }
+                Console.Write("Enter height of array again: ");
+            }
+            //uint height = Convert.ToUInt32(Console.ReadLine());
             //Console.WriteLine($"{lng} + {height}");
 
             Console.WriteLine();
            // Console.WriteLine("////////////////////////////////////");
             Console.WriteLine();
             int[,] array = new int[height, lng];
+           // string str;
             for (int i = 0; i < height; i++)
             {
-                Console.WriteLine($"Enter row {i}");
-                string str = Console.ReadLine();
-                string newStr = str.Replace(",", " ");
-                int[] buffer = newStr.Split(' ').Select(int.Parse).ToArray();
-                for (int j = 0; j < lng; j++)
-                {
-                    array[i, j] = buffer[j];
-                }
+                Console.WriteLine($"Enter row {i}...");
+                    for(int k = 0; k < lng; k ++)
+                    {
+                        Console.Write($"Enter element {k} in row {i}: ");
+                        while(true)
+                        { 
+                            readBuffer = Console.ReadLine();
+                            if (Int32.TryParse(readBuffer, out array[i, k]))
+                            {
+                               break;
+                            }
+                            Console.Write($"Enter element {k} again: ");
+                        }
+                    }
+                
+                //string newStr = str.Replace(",", " ");
+                //int[] buffer = newStr.Split(' ').Select(int.Parse).ToArray();
+                //for (int j = 0; j < lng; j++)
+                //{
+                //    array[i, j] = buffer[j];
+                //}
             }
            
          
@@ -93,9 +131,10 @@ namespace Prj_net_framework
                 Console.WriteLine();
                 for (int j = 0; j < height; j++)
                 {
+                    Console.WriteLine("            ");
                     for (int i = 0; i < lng; i++)
                     {
-                        Console.Write($"       {array[j, i]},");
+                        Console.Write($"  {array[j, i]},");
                     }
                     Console.WriteLine("");
                 }
