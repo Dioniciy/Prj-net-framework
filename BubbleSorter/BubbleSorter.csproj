@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D0708AF1-4F6D-4A51-8725-45D1FF7243B1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Prj_net_framework</RootNamespace>
-    <AssemblyName>Prj net framework</AssemblyName>
+    <ProjectGuid>{D8EB86D5-7E84-41C0-8753-04ED252CA44E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BubbleSorter</RootNamespace>
+    <AssemblyName>BubbleSorter</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,36 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BubbleSorter\BubbleSorter.csproj">
-      <Project>{d8eb86d5-7e84-41c0-8753-04ed252ca44e}</Project>
-      <Name>BubbleSorter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\InsertionSorter\InsertionSorter.csproj">
-      <Project>{76bbee61-2ada-41b3-af3e-fdf68d3140fd}</Project>
-      <Name>InsertionSorter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ISorter\ISorter.csproj">
       <Project>{27e2c04b-69ca-4a57-9317-82780112e370}</Project>
       <Name>ISorter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MergeSorter\MergeSorter.csproj">
-      <Project>{c9d06e80-af4f-435a-9116-8fb2cbcbd818}</Project>
-      <Name>MergeSorter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QuickSorter\QuickSorter.csproj">
-      <Project>{47aaeebe-ce96-45d0-b7cd-f0711cf96071}</Project>
-      <Name>QuickSorter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SelectionSorter\SelectionSorter.csproj">
-      <Project>{e779b137-554b-43e3-8619-a9b63f816850}</Project>
-      <Name>SelectionSorter</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
