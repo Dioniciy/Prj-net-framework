@@ -23,5 +23,9 @@ namespace SelectionSorterNS
                 data[j] = tmp;
             }
         }
+        public string Show()
+        {
+            return "Selection sorter";
+        }
     }
 }

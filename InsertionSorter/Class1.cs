@@ -20,5 +20,9 @@ namespace InsertionSorterNS
                 }
             }
         }
+        public string Show()
+        {
+            return "Insertion sorter";
+        }
     }
 }

@@ -60,6 +60,9 @@ namespace MergeSorterNS
             }
         }
 
-
+        public string Show()
+        {
+            return "Merge sorter";
+        }
     }
 }

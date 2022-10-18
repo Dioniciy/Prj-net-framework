@@ -20,5 +20,9 @@ namespace BubbleSorterNS
                 }
             }
         }
+        public string Show()
+        {
+            return "Bubble sorter";
+        }
     }
 }

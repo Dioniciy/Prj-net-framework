@@ -3,5 +3,6 @@
     public interface ISorter
     {
         void Sort(int[] data, uint lenD);
+        string Show();
     }
 }

@@ -49,6 +49,10 @@ namespace QuickSorterNS
                 }
             }
         }
+        public string Show()
+        {
+            return "Quick sorter";
+        }
     }
 }
 
