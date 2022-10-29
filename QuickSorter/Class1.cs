@@ -3,6 +3,17 @@ namespace QuickSorterNS
 {
     public class QuickSorter : ISorter
     {
+        int[] data;
+        uint lenD;
+        public void Init(int[] data, uint lenD)
+        {
+            this.data = data;
+            this.lenD = lenD;
+        }
+        public void Sort()
+        {
+            Sort(data, lenD);
+        }
         public void Sort(int[] data, uint len)
         {
             uint lenD = len;

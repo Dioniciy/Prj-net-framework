@@ -4,6 +4,17 @@ namespace MergeSorterNS
 {
     public class MergeSorter : ISorter
     {
+        int[] data;
+        uint lenD;
+        public void Init(int[] data, uint lenD)
+        {
+            this.data = data;
+            this.lenD = lenD;
+        }
+        public void Sort()
+        {
+            Sort(data, lenD);
+        }
         public void Sort(int[] data, uint lenD)
         {
             if (lenD > 1)
@@ -59,7 +70,6 @@ namespace MergeSorterNS
                 }
             }
         }
-
         public string Show()
         {
             return "Merge sorter";

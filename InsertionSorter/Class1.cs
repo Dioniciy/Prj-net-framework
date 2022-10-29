@@ -4,7 +4,14 @@ namespace InsertionSorterNS
 {
     public class InsertionSorter : ISorter
     {
-        public void Sort(int[] data, uint lenD)
+        int[] data;
+        uint lenD;
+        public void Init(int[] data, uint lenD)
+        {
+            this.data = data;
+            this.lenD = lenD;
+        }
+        public void Sort()
         {
             int key = 0;
             int i = 0;

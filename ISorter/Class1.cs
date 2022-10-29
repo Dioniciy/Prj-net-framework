@@ -2,7 +2,8 @@
 {
     public interface ISorter
     {
-        void Sort(int[] data, uint lenD);
+        void Sort();
         string Show();
+        void Init(int[] data, uint lenD);
     }
 }

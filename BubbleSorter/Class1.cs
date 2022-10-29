@@ -4,7 +4,14 @@ namespace BubbleSorterNS
 {
     public class BubbleSorter : ISorter
     {
-        public void Sort(int[] data, uint lenD)
+        int[] data;
+        uint lenD;
+        public void Init(int[] data, uint lenD)
+        {
+            this.data = data;
+            this.lenD = lenD;
+        }
+        public void Sort()
         {
             int tmp = 0;
             for (int i = 0; i < lenD; i++)
@@ -24,5 +31,6 @@ namespace BubbleSorterNS
         {
             return "Bubble sorter";
         }
+
     }
 }

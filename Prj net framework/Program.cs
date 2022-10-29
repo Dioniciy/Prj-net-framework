@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+
 
 using ISorterNS;
 using SelectionSorterNS;
@@ -7,6 +9,9 @@ using InsertionSorterNS;
 using MergeSorterNS;
 using QuickSorterNS;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.IO;
+using System.Text;
 
 namespace Prj_net_framework
 {
@@ -21,20 +26,21 @@ namespace Prj_net_framework
 
         static uint lng;
         static uint height;
-        static int[,] array;
-        static bool arrayCreated = false;
+        static int[,] array = new int[1000, 1000];
+        static bool arrayInited = false;
         static bool arraySizeEntered;
-        static uint menuElement = 0;
+        
         static string[] outArgs;
-        static bool useDefaultData;
+        static int useData;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        static string path = "./input data.txt";
         static void Main(string[] args)
         {
             outArgs = args;
             InitList();
-
             while (true)
             {
-                Start();                     
+                Start();               
             }
         }
         
@@ -42,20 +48,7 @@ namespace Prj_net_framework
         {
             ShowMenu();
             SelectMenuElement(ReadUintNumber());
-            if (arrayCreated == false && arraySizeEntered == true)
-            {
-                array = new int[height, lng];
-                arrayCreated = true;
-                if (useDefaultData)
-                {
-                    SelectMenuElement(3);
-                }
-                else
-                {
-
-                    SelectMenuElement(1);
-                }
-            }
+            
         }
         static void ShowMenu()
         {
@@ -64,11 +57,15 @@ namespace Prj_net_framework
             Console.WriteLine("1. Enter array");
             Console.WriteLine("2. Select method");
             Console.WriteLine("3. Use defoult array");
+            Console.WriteLine("4. Use data from file");
+            Console.WriteLine("5. Use random data");
+            Console.WriteLine("6. Show array");
             Console.Write("Your choose: ");
         }
         static void ShowMethods()
         {
-            sorters.ForEach(method => Console.WriteLine(sorters.IndexOf(method) + 1 + ". " + method.Show()));
+            Console.WriteLine("0. Start all ");
+            sorters.ForEach(method => Console.WriteLine(sorters.IndexOf(method) + 1 + ". " + method.Show()));           
             Console.Write("Your choose: ");
         }
 
@@ -128,57 +125,149 @@ namespace Prj_net_framework
             Console.Write("Enter height of array: ");
             height = ReadUintNumber();           
         }
-        static void InitArray(int[,] array, bool useDefaultData = default)
+        static void InitArray(int[,] array, int useData = 0)
         {
             Console.WriteLine("===================");
             Console.WriteLine("Start initialisation...");
-            Console.WriteLine("");
-            for (int i = 0; i < height; i++)
+            Console.WriteLine("");           
+            
+            switch (useData)
             {
-                for (int k = 0; k < lng; k++)
-                {
-                    if (useDefaultData == true)
-                    {
-                        if (int.TryParse(outArgs[lng*i + k + 2], out array[i, k]) == false)
-                        {
-                            array[i, k] = 0;
-                        }
-                    }
-                    else
-                    {
-                        Console.Write("Enter one arrays element and press enter: ");
-                        array[i, k] = ReadIntNumber();
-                    }
-                    
-                }
-            }
+                case 0:
+                    InitFromConsole(array);
+                    break;
+                case 1:
+                    InitFromArguments(array);
+                    break;
+                case 2:
+                    InitFromFile(array);                               
+                    break;
+                case 3:
+                    InitFromRandomData(array);
+                    break;
+
+            }            
+            arrayInited = true;
             Console.WriteLine("===================");
             Console.WriteLine("Array inited ");
             Console.WriteLine("===================");
 
         }
+        static void InitFromConsole(int[,] array)
+        {
+            if (!arraySizeEntered)
+            {
+                SetArraySize(out uint lng, out uint height);
+            }
+            for (int i = 0; i < height; i++)
+            {
+                for (int k = 0; k < lng; k++)
+                {
+                    Console.Write("Enter one arrays element and press enter: ");
+                    array[i, k] = ReadIntNumber();
+                }
+            }
+        }
+        
+        static void InitFromArguments(int[,] array)
+        {
+            if (!arraySizeEntered)
+            {
+                if (uint.TryParse(outArgs[0], out lng) == false)
+                {
+                    Console.Write("");
+                    log.Info("Invalid data for lengh!");
+                    lng = 10;
+                }
+                if (uint.TryParse(outArgs[1], out height) == false)
+                {
+                    log.Info("Invalid data for heifht!");
+                    height = 10;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < height; i++)
+                {
+                    for (int k = 0; k < lng; k++)
+                    {
+                        if (int.TryParse(outArgs[lng * i + k + 2], out array[i, k]) == false)
+                        {
+                            log.Info("Invalid data for element!");
+                            array[i, k] = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        static void InitFromFile(int[,] array)
+        {
+            string line = "";            
+            int cnt = 0;          
+            StreamReader reader;
+
+            if (!File.Exists(path))
+            {
+                try
+                {
+                    FileStream fs = File.Create(path);
+                    Byte[] b = new UTF8Encoding(true).GetBytes("5 2 9 5 2 1 4 7 6 3 0 8");
+                    fs.Write(b, 0, b.Length);
+                    fs.Close();
+                }
+                catch 
+                {
+                    Console.WriteLine("File can`t created");
+                }
+            }
+            reader = new StreamReader(path);
+            line = reader.ReadLine();
+            reader.Close();
+            lng = (uint)GetNumberFromString(line, ref cnt);
+            if(lng == 0) { lng = 10; }
+            height = (uint)GetNumberFromString(line.Substring(cnt), ref cnt);
+            if (height == 0) { height = 10; }
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int k = 0; k < lng; k++)
+                {
+                    array[i, k] = GetNumberFromString(line.Substring(cnt), ref cnt);                  
+                }
+            }
+        }
+
+        static void InitFromRandomData(int[,] array)
+        {
+            Random rnd = new Random();
+            if (!arraySizeEntered)
+            {
+                lng = (uint)rnd.Next(1, 20);
+                height = (uint)rnd.Next(1, 20); 
+            }
+            for (int i = 0; i < height; i++)
+            {
+                for (int k = 0; k < lng; k++)
+                {
+                    array[i, k] = rnd.Next(1000);
+                }
+            }         
+        }
         static void SelectMenuElement(uint elementNumber)
         {
             switch(elementNumber)
             {
-                case 1:
-                    if (useDefaultData == true)
+                case 1:                  
+                    if (useData != 0)
                     {
-                        useDefaultData = false;
-                        arrayCreated = false;
-                    }                   
-                    if (arrayCreated == false)
-                    {
-                        SetArraySize(out lng, out height);
-                        arraySizeEntered = true;
-                    }
-                    else
-                    {
-                        InitArray(array);
+                        useData = 0;
                     }                  
+                    InitArray(array, useData);  
+                    
                     break;
                 case 2:
-                    if (arrayCreated == true)
+                    if (arrayInited)
                     {
                         ShowMethods();                        
                         SelectMethod(ReadIntNumber());
@@ -190,35 +279,45 @@ namespace Prj_net_framework
                     }
                     break;
                 case 3:
-                    if (useDefaultData == false)
-                    { 
-                        useDefaultData = true;
-                        arrayCreated = false;
-                    }
                     
-                    if (arrayCreated == false)
+                    if (useData != 1 )
+                    { 
+                        useData = 1;
+                    }                                       
+                    InitArray(array, useData);                    
+                    break;
+                case 4:
+                    if (useData != 2)
                     {
-                        if (uint.TryParse(outArgs[0], out lng) == false)
-                        {
-                           Console.Write("Not valid data for lengh");
-                        }
-                        if (uint.TryParse(outArgs[1], out height) == false)
-                        {
-                           Console.Write("Not valid data for height");
-                        }                       
-                        arraySizeEntered = true;  
+                        useData = 2;
+                    }
+                    InitArray(array, useData);
+                    break;
+                case 5:
+                    if (useData != 3)
+                    {
+                        useData = 3;
+                    }
+                    InitArray(array, useData);
+                    break;
+                case 6:
+                    if (arrayInited)
+                    {
+                        ShowArray();
                     }
                     else
                     {
-                        InitArray(array, useDefaultData);
+                        Console.WriteLine("Array is empty ");
                     }
                     break;
+
             }
         }
 
-        static void SelectMethod(int num)
+        static void SelectMethod(int num = 0)
         {
-            if (num > 0) { num--; }
+            
+            if(num >= sorters.Count) { return; }
             int[] buff_arr = new int[lng * height];
             for (int j = 0; j < height; j++)
             {
@@ -227,7 +326,24 @@ namespace Prj_net_framework
                     buff_arr[lng * j + i] = array[j, i];
                 }
             }
-            sorters[num].Sort(buff_arr, lng * height);
+
+            switch (num)
+            {
+                case 0:
+                    foreach (var sorter in sorters)
+                    {
+                        sorter.Init(buff_arr, lng * height);
+                        Thread myThread = new Thread(new ThreadStart(sorter.Sort));
+                        myThread.Start();
+                        
+                    }
+                    break;
+                default:
+                    if (num > 0) { num--; }
+                    sorters[num].Init(buff_arr, lng * height);
+                    sorters[num].Sort();
+                    break;
+            }
 
             for (int j = 0; j < height; j++)
             {
@@ -257,6 +373,33 @@ namespace Prj_net_framework
             Console.WriteLine();
             Console.WriteLine("__________________________________");
         }
+        static int GetNumberFromString(string str, ref int charLng )
+        {
+            string numericString = "";
+            bool flagStartNum = false;
 
+            foreach (char c in str)
+            {
+                charLng++;
+                if ((c >= '0' && c <= '9')) //|| c == ' ' || c == '-'
+                {
+                    if (!flagStartNum) { flagStartNum = true; }                     
+                    numericString = string.Concat(numericString, c);
+                }
+                else if(flagStartNum)
+                {
+                    break;
+                }
+            }
+            int number;
+            if (int.TryParse(numericString, out number) == false)
+            {
+                number = 0;
+                log.Info($"Can`t convert string {numericString} to int!");
+            }
+            return number;
+        }
     }
+
+    
 }

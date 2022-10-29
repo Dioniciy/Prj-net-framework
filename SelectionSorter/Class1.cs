@@ -4,7 +4,14 @@ namespace SelectionSorterNS
 {
     public class SelectionSorter : ISorter
     {
-        public void Sort(int[] data, uint lenD)
+        int[] data;
+        uint lenD;
+        public void Init(int[] data, uint lenD)
+        {
+            this.data = data;
+            this.lenD = lenD;
+        }
+        public void Sort()
         {
             int j = 0;
             int tmp = 0;
