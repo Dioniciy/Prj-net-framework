@@ -1,4 +1,6 @@
 ﻿using ISorterNS;
+using System;
+using System.Diagnostics;
 
 namespace BubbleSorterNS
 {
@@ -13,6 +15,9 @@ namespace BubbleSorterNS
         }
         public void Sort()
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            Console.WriteLine(Show() + " start");
             int tmp = 0;
             for (int i = 0; i < lenD; i++)
             {
@@ -26,6 +31,8 @@ namespace BubbleSorterNS
                     }
                 }
             }
+            Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
+            timer.Stop();
         }
         public string Show()
         {

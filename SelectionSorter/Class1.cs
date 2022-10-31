@@ -1,4 +1,6 @@
 ﻿using ISorterNS;
+using System;
+using System.Diagnostics;
 
 namespace SelectionSorterNS
 {
@@ -13,6 +15,9 @@ namespace SelectionSorterNS
         }
         public void Sort()
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            Console.WriteLine(Show() + " start");
             int j = 0;
             int tmp = 0;
             for (int i = 0; i < lenD; i++)
@@ -29,6 +34,8 @@ namespace SelectionSorterNS
                 data[i] = data[j];
                 data[j] = tmp;
             }
+            Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
+            timer.Stop();
         }
         public string Show()
         {

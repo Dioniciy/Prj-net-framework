@@ -1,4 +1,7 @@
 ﻿using ISorterNS;
+using System;
+using System.Diagnostics;
+
 namespace QuickSorterNS
 {
     public class QuickSorter : ISorter
@@ -12,7 +15,12 @@ namespace QuickSorterNS
         }
         public void Sort()
         {
-            Sort(data, lenD);
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            Console.WriteLine(Show() + " start");
+            Sort(data, lenD);            
+            Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
+            timer.Stop();
         }
         public void Sort(int[] data, uint len)
         {
@@ -59,6 +67,7 @@ namespace QuickSorterNS
                     }
                 }
             }
+            
         }
         public string Show()
         {

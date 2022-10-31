@@ -1,4 +1,6 @@
 ﻿using ISorterNS;
+using System;
+using System.Diagnostics;
 
 namespace MergeSorterNS
 {
@@ -13,7 +15,12 @@ namespace MergeSorterNS
         }
         public void Sort()
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            Console.WriteLine(Show() + " start");
             Sort(data, lenD);
+            Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
+            timer.Stop();
         }
         public void Sort(int[] data, uint lenD)
         {
@@ -38,6 +45,7 @@ namespace MergeSorterNS
                 Sort(R, rem);
                 merge(data, lenD, L, middle, R, rem);
             }
+            
         }
         void merge(int[] merged, uint lenD, int[] L, uint lenL, int[] R, uint lenR)
         {

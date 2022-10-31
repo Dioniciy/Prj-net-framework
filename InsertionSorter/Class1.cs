@@ -1,4 +1,6 @@
 ﻿using ISorterNS;
+using System;
+using System.Diagnostics;
 
 namespace InsertionSorterNS
 {
@@ -13,6 +15,9 @@ namespace InsertionSorterNS
         }
         public void Sort()
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            Console.WriteLine(Show() + " start");
             int key = 0;
             int i = 0;
             for (int j = 1; j < lenD; j++)
@@ -26,6 +31,8 @@ namespace InsertionSorterNS
                     data[i + 1] = key;
                 }
             }
+            Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
+            timer.Stop();
         }
         public string Show()
         {
