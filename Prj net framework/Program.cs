@@ -13,6 +13,7 @@ using System.Net.NetworkInformation;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
+using System.Data.Entity;
 
 namespace Prj_net_framework
 {
@@ -35,8 +36,38 @@ namespace Prj_net_framework
         static int useData;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         static string path = "./input data.txt";
+        public class User
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int Age { get; set; }
+        }
+        public class ArrayTwoDimensional
+        {
+            public int Id { get; set; }
+            public int Lng { get; set; }
+            public int Height { get; set; }
+            public string Data { get; set; }
+        }
+        class UserContext : DbContext
+        {
+            public UserContext()
+                : base("DbConnection")
+            { }
+
+            public DbSet<User> Users { get; set; }
+        }
+        class ArrayContext : DbContext
+        {
+            public ArrayContext()
+                : base("DbConnection")
+            { }
+
+            public DbSet<ArrayTwoDimensional> Arrays { get; set; }
+        }
         static void Main(string[] args)
         {
+
             outArgs = args;
             InitList();
             while (true)
@@ -61,6 +92,8 @@ namespace Prj_net_framework
             Console.WriteLine("4. Use data from file");
             Console.WriteLine("5. Use random data");
             Console.WriteLine("6. Show array");
+            Console.WriteLine("7. Use data from DB");
+            Console.WriteLine("8. Save data to DB");
             Console.Write("Your choose: ");
         }
         static void ShowMethods()
@@ -145,6 +178,9 @@ namespace Prj_net_framework
                 case 3:
                     InitFromRandomData(array);
                     break;
+                case 4:
+                    InitFromDB(array);
+                    break;
 
             }
             arrayInited = true;
@@ -167,20 +203,19 @@ namespace Prj_net_framework
 
         static void InitFromArguments(int[,] array)
         {
-            if (!arraySizeEntered)
+   
+            if (uint.TryParse(outArgs[0], out lng) == false)
             {
-                if (uint.TryParse(outArgs[0], out lng) == false)
-                {
-                    Console.Write("");
-                    log.Info("Invalid data for lengh!");
-                    lng = 10;
-                }
-                if (uint.TryParse(outArgs[1], out height) == false)
-                {
-                    log.Info("Invalid data for heifht!");
-                    height = 10;
-                }
+                Console.Write("");
+                log.Info("Invalid data for lengh!");
+                lng = 10;
             }
+            if (uint.TryParse(outArgs[1], out height) == false)
+            {
+                log.Info("Invalid data for heifht!");
+                height = 10;
+            }
+            
             else
             {
                 for (int i = 0; i < height; i++)
@@ -248,6 +283,48 @@ namespace Prj_net_framework
                 }
             }
         }
+        static void InitFromDB(int[,] array)
+        {
+            int cnt = 0;
+            using (ArrayContext db = new ArrayContext())
+            {
+                DbSet< ArrayTwoDimensional> arrays = db.Arrays;
+                foreach (ArrayTwoDimensional u in arrays)
+                {
+                    lng = (uint)u.Lng;
+                    height = (uint)u.Height;
+                    for (int i = 0; i < height; i++)
+                    {
+                        for (int k = 0; k < lng; k++)
+                        {
+                            array[i, k] = GetNumberFromString(u.Data.Substring(cnt), ref cnt);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        static void SaveToDB(int[,] array)
+        {
+            using (ArrayContext db = new ArrayContext())
+            {
+                string arr_str = "";
+                int[] buff_arr = new int[lng * height];
+                for (int j = 0; j < height; j++)
+                {
+                    for (int i = 0; i < lng; i++)
+                    {
+                        arr_str = string.Concat(arr_str, array[j, i].ToString());
+                        arr_str = string.Concat(arr_str, ' ');
+                        //buff_arr[lng * j + i] = array[j, i];
+                    }
+                }
+
+                ArrayTwoDimensional data = new ArrayTwoDimensional { Data = arr_str, Height = (int)height, Lng = (int)lng };
+                db.Arrays.Add(data);
+                db.SaveChanges();
+            }
+        }
         static void SelectMenuElement(uint elementNumber)
         {
             switch (elementNumber)
@@ -304,14 +381,26 @@ namespace Prj_net_framework
                         Console.WriteLine("Array is empty ");
                     }
                     break;
-
+                case 7:
+                    if (useData != 4)
+                    {
+                        useData = 4;
+                    }
+                    InitArray(array, useData);
+                    break;
+                case 8:
+                    if (arrayInited)
+                    {
+                        SaveToDB(array);
+                    }
+                    break;
             }
         }
 
         static void SelectMethod(int num = 0)
         {
 
-            if (num >= sorters.Count) { return; }
+            if (num > sorters.Count) { return; }
             int[] buff_arr = new int[lng * height];
             for (int j = 0; j < height; j++)
             {
