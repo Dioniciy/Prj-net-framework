@@ -75,7 +75,7 @@ namespace WorkClassNS
         public void LoadMethods()
         {
             sorters.Clear();
-            string[] array = Directory.GetFiles("C:/Users/Den/source/repos/Prj net framework/dll", "*.dll");
+            string[] array = Directory.GetFiles("../../../dll", "*.dll");
             log.Info($"Exist {array.Length} dll files.");
             foreach (string file in array)
             {

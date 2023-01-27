@@ -156,5 +156,30 @@ namespace WinForm
         {
 
         }
+
+        private void лроToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void languageToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Exit_bt_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Exit_bt_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
