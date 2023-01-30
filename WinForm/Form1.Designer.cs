@@ -28,10 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.InitFromList = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.initBt = new System.Windows.Forms.Button();
@@ -44,9 +41,11 @@
             this.addColumnBt = new System.Windows.Forms.Button();
             this.addRowBt = new System.Windows.Forms.Button();
             this.deleteTableBt = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.languageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Exit_bt = new System.Windows.Forms.Button();
             this.logoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,38 +76,11 @@
             this.searchToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.languageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.Exit_bt = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            contextMenuStrip1.SuspendLayout();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
-            this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // contextMenuStrip1
-            // 
-            contextMenuStrip1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            resources.ApplyResources(contextMenuStrip1, "contextMenuStrip1");
-            contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openFileToolStripMenuItem});
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            contextMenuStrip1.ShowImageMargin = false;
-            // 
-            // openFileToolStripMenuItem
-            // 
-            this.openFileToolStripMenuItem.BackColor = System.Drawing.Color.DimGray;
-            this.openFileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.openFileToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
-            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            resources.ApplyResources(this.openFileToolStripMenuItem, "openFileToolStripMenuItem");
-            this.openFileToolStripMenuItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             // 
             // InitFromList
             // 
@@ -216,42 +188,43 @@
             this.deleteTableBt.UseVisualStyleBackColor = false;
             this.deleteTableBt.Click += new System.EventHandler(this.deleteTableBt_Click);
             // 
-            // statusStrip1
+            // languageToolStripMenuItem
             // 
-            this.statusStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Name = "statusStrip1";
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
             // 
-            // toolStripStatusLabel1
+            // toolStripMenuItem1
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
-            this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             // 
-            // menuStrip1
+            // languageToolStripMenuItem1
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(52)))), ((int)(((byte)(52)))));
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.logoToolStripMenuItem,
-            this.fileToolStripMenuItem1,
-            this.editToolStripMenuItem1,
-            this.toolsToolStripMenuItem1,
-            this.helpToolStripMenuItem});
-            this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            this.languageToolStripMenuItem1.Name = "languageToolStripMenuItem1";
+            resources.ApplyResources(this.languageToolStripMenuItem1, "languageToolStripMenuItem1");
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
+            // 
+            // Exit_bt
+            // 
+            resources.ApplyResources(this.Exit_bt, "Exit_bt");
+            this.Exit_bt.BackColor = System.Drawing.Color.Transparent;
+            this.Exit_bt.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.Exit_bt.FlatAppearance.BorderSize = 0;
+            this.Exit_bt.Name = "Exit_bt";
+            this.Exit_bt.UseVisualStyleBackColor = false;
+            this.Exit_bt.Click += new System.EventHandler(this.Exit_bt_Click_1);
             // 
             // logoToolStripMenuItem
             // 
+            this.logoToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             resources.ApplyResources(this.logoToolStripMenuItem, "logoToolStripMenuItem");
             this.logoToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.logoToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.logoToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.logoToolStripMenuItem.Name = "logoToolStripMenuItem";
             this.logoToolStripMenuItem.Click += new System.EventHandler(this.лроToolStripMenuItem_Click);
             // 
@@ -433,49 +406,41 @@
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
             resources.ApplyResources(this.aboutToolStripMenuItem1, "aboutToolStripMenuItem1");
             // 
-            // languageToolStripMenuItem
+            // menuStrip1
             // 
-            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
+            this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.logoToolStripMenuItem,
+            this.fileToolStripMenuItem1,
+            this.editToolStripMenuItem1,
+            this.toolsToolStripMenuItem1,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
-            // toolStripMenuItem1
+            // statusStrip1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
-            // 
-            // languageToolStripMenuItem1
-            // 
-            this.languageToolStripMenuItem1.Name = "languageToolStripMenuItem1";
-            resources.ApplyResources(this.languageToolStripMenuItem1, "languageToolStripMenuItem1");
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
-            // 
-            // Exit_bt
-            // 
-            resources.ApplyResources(this.Exit_bt, "Exit_bt");
-            this.Exit_bt.BackColor = System.Drawing.Color.Transparent;
-            this.Exit_bt.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.Exit_bt.FlatAppearance.BorderSize = 0;
-            this.Exit_bt.Name = "Exit_bt";
-            this.Exit_bt.UseVisualStyleBackColor = false;
-            this.Exit_bt.Click += new System.EventHandler(this.Exit_bt_Click_1);
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
+            this.statusStrip1.AccessibleRole = System.Windows.Forms.AccessibleRole.StatusBar;
+            this.statusStrip1.BackColor = System.Drawing.Color.Black;
+            this.statusStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
+            resources.ApplyResources(this.statusStrip1, "statusStrip1");
+            this.statusStrip1.Name = "statusStrip1";
             // 
             // Form1
             // 
             this.AllowDrop = true;
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             resources.ApplyResources(this, "$this");
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.Controls.Add(this.Exit_bt);
+            this.ControlBox = false;
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.Exit_bt);
             this.Controls.Add(this.deleteTableBt);
             this.Controls.Add(this.addRowBt);
             this.Controls.Add(this.addColumnBt);
@@ -493,13 +458,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.HelpButton = true;
             this.Name = "Form1";
-            this.ShowInTaskbar = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Load += new System.EventHandler(this.Form1_Load);
-            contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -521,14 +482,13 @@
         private System.Windows.Forms.Button addColumnBt;
         private System.Windows.Forms.Button addRowBt;
         private System.Windows.Forms.Button deleteTableBt;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        public System.Windows.Forms.Button Exit_bt;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem logoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
@@ -558,9 +518,7 @@
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem logoToolStripMenuItem;
-        public System.Windows.Forms.Button Exit_bt;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 

@@ -15,25 +15,44 @@ namespace WinForm
     public partial class Form1 : Form
     {
         WorkClass workProgram = new WorkClass();
+        //public event EventHandler ResizeBegin;
         public Form1()
         {
             
             InitializeComponent();
             Init();
-            this.FormBorderStyle = FormBorderStyle.None;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.ControlBox = false;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Text = "";
+
+            //this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.SetStyle((System.Windows.Forms.ControlStyles)0x10, true);
+            //this.SetStyle(ControlStyles.FixedHeight, false);
+            
         }
-        private const int cGrip = 160;      // Grip size
-        private const int cCaption = 32;   // Caption bar height;
+        private void Form1_ResizeBegin(Object sender, EventArgs e)
+        {
+
+            MessageBox.Show("You are in the Form.ResizeBegin event.");
+        }
+        private void Form1_ResizeEnd(Object sender, EventArgs e)
+        {
+
+            MessageBox.Show("You are in the Form.ResizeEnd event.");
+        }
+        private const int cGrip = 30;      // Grip size
+        private const int cCaption = 30;   // Caption bar height;
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Rectangle rc = new Rectangle(this.ClientSize.Width - cGrip, this.ClientSize.Height - cGrip, cGrip, cGrip);
-            ControlPaint.DrawSizeGrip(e.Graphics, this.BackColor, rc);
+            Rectangle rc;//= new Rectangle(this.ClientSize.Width - cGrip, this.ClientSize.Height - cGrip, cGrip, cGrip);
+                         // ControlPaint.DrawSizeGrip(e.Graphics, this.BackColor, rc);
             rc = new Rectangle(0, 0, this.ClientSize.Width, cCaption);
-            
-            e.Graphics.FillRectangle(Brushes.DarkBlue, rc);
+
+            e.Graphics.FillRectangle(Brushes.Transparent, rc);
         }
 
         protected override void WndProc(ref Message m)
@@ -218,6 +237,16 @@ namespace WinForm
         }
 
         private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+           
+        }
+
+        private void toolStripContainer3_ContentPanel_Load(object sender, EventArgs e)
         {
 
         }
