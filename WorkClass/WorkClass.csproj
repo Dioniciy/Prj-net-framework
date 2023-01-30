@@ -60,8 +60,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Array2Dim.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="FileLogic.cs" />
+    <Compile Include="InitLogic.cs" />
+    <Compile Include="InterfaceObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
