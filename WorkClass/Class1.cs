@@ -20,31 +20,34 @@ namespace WorkClassNS
 {
     public class WorkClass: ISubject
     {
-        static List<ReflectionSorter> sorters = new List<ReflectionSorter>();
+         List<ReflectionSorter> sorters = new List<ReflectionSorter>();
 
-        ServerLogic server = new ServerLogic();
-        public InitLogic init = new InitLogic(ref array, ref lng, ref height);
-        static public int lng;
-        static public int height;
-        static public int[,] array = new int[1000, 1000];
+           int lng;
+           int height;
+        public   int[,] array = new int[1000, 1000];
         public bool arrayInited = false;
         public bool arraySizeEntered;
        
         public string[] outArgs;
+        ServerLogic server = new ServerLogic();
+        public InitLogic init = new InitLogic();
+
         public int useData;
-        static private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         public int GetHeight() { return (int)height; }
         public int GetLengh() { return (int)lng; }
+        public void SetSize(int height, int lng) { this.lng = lng; this.height = height; }
         private List<IObserver> _observers = new List<IObserver>();
 
         private WorkClass() { }
-        private static WorkClass _instance;
+        private static  WorkClass _instance;
         public static WorkClass GetInstance()
         {
             if (_instance == null)
             {
                 _instance = new WorkClass();
+               
             }
             return _instance;
         }
@@ -138,23 +141,7 @@ namespace WorkClassNS
 
         
        
-        public void InitFromDB(int[,] array)
-        {
-            ArrayTwoDimensional u = server.ReadFromDB();
-            if(u != null)
-            {
-                int cnt = 0;
-                if (u.Lng > 1 && u.Height > 1) { lng = u.Lng; height = u.Height; arrayInited = true; }
-                else { arrayInited = false; }                     
-                for (int i = 0; i < height; i++)
-                {
-                    for (int k = 0; k < lng; k++)
-                    {
-                        array[i, k] = GetNumberFromString(u.Data.Substring(cnt), ref cnt);
-                    }
-                }
-            }         
-        }
+        
         public void SaveToDB()
         {
             string arr_str = "";
@@ -181,21 +168,22 @@ namespace WorkClassNS
                     arrayInited = init.InitFromFile();
                     break;
                 case 2:
-                    arrayInited = init.InitFromRandomData(array);
+                    arrayInited = init.InitFromRandomData();
                     break;
                 case 3:
-                    InitFromDB(array);
+                    arrayInited = init.InitFromDB();
                     break;
                 case 4:
                     arrayInited = init.InitFromArguments(outArgs);
                     break;
 
             }
+            init.GetData(ref array, ref height, ref lng);
         }
         
    
         delegate void MessageHandler(string message);
-        static public void SortFunc(object someObj)
+        public void SortFunc(object someObj)
         {
             if (someObj is ReflectionSorter obj)
             {
@@ -275,31 +263,6 @@ namespace WorkClassNS
             return buffer;
         }
         
-        static int GetNumberFromString(string str, ref int charLng)
-        {
-            string numericString = "";
-            bool flagStartNum = false;
-
-            foreach (char c in str)
-            {
-                charLng++;
-                if ((c >= '0' && c <= '9')) //|| c == ' ' || c == '-'
-                {
-                    if (!flagStartNum) { flagStartNum = true; }
-                    numericString = string.Concat(numericString, c);
-                }
-                else if (flagStartNum)
-                {
-                    break;
-                }
-            }
-            int number;
-            if (int.TryParse(numericString, out number) == false)
-            {
-                number = 0;
-                log.Info($"Can`t convert string {numericString} to int!");
-            }
-            return number;
-        }
+        
     }
 }

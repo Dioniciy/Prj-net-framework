@@ -7,8 +7,8 @@ namespace MergeSorterNS
     public class MergeSorter : ISorter
     {
         int[] data;
-        uint lenD;
-        public void Init(int[] data, uint lenD)
+        int lenD;
+        public void Init(int[] data, int lenD)
         {
             this.data = data;
             this.lenD = lenD;
@@ -22,12 +22,12 @@ namespace MergeSorterNS
             Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
             timer.Stop();
         }
-        public void Sort(int[] data, uint lenD)
+        public void Sort(int[] data, int lenD)
         {
             if (lenD > 1)
             {
-                uint middle = lenD / 2;
-                uint rem = lenD - middle;
+                int middle = lenD / 2;
+                int rem = lenD - middle;
                 int[] L = new int[middle];
                 int[] R = new int[rem];
                 for (int i = 0; i < lenD; i++)
@@ -47,7 +47,7 @@ namespace MergeSorterNS
             }
             
         }
-        void merge(int[] merged, uint lenD, int[] L, uint lenL, int[] R, uint lenR)
+        void merge(int[] merged, int lenD, int[] L, int lenL, int[] R, int lenR)
         {
             int i = 0;
             int j = 0;

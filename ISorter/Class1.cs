@@ -4,6 +4,6 @@
     {
         void Sort();
         string Show();
-        void Init(int[] data, uint lenD);
+        void Init(int[] data, int lenD);
     }
 }

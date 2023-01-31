@@ -123,10 +123,9 @@ namespace WinForm
                 }
                 workProgram.init.InitArray(arrayNums, dataGridView.Rows.Count - 1, dataGridView.Columns.Count);
             }
-            else
-            {
+            
                 workProgram.StartInitMethod(InitFromList.SelectedIndex);
-            }
+            
             
 
         }

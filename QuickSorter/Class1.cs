@@ -7,8 +7,8 @@ namespace QuickSorterNS
     public class QuickSorter : ISorter
     {
         int[] data;
-        uint lenD;
-        public void Init(int[] data, uint lenD)
+        int lenD;
+        public void Init(int[] data, int lenD)
         {
             this.data = data;
             this.lenD = lenD;
@@ -22,12 +22,12 @@ namespace QuickSorterNS
             Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
             timer.Stop();
         }
-        public void Sort(int[] data, uint len)
+        public void Sort(int[] data, int len)
         {
-            uint lenD = len;
+            int lenD = len;
             int pivot = 0;
-            uint ind = lenD / 2;
-            uint i, j = 0, k = 0;
+            int ind = lenD / 2;
+            int i, j = 0, k = 0;
             if (lenD > 1)
             {
                 int[] l = new int[lenD];

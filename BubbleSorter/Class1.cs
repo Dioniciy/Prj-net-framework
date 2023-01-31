@@ -7,8 +7,8 @@ namespace BubbleSorterNS
     public class BubbleSorter : ISorter
     {
         int[] data;
-        uint lenD;
-        public void Init(int[] data, uint lenD)
+        int lenD;
+        public void Init(int[] data, int lenD)
         {
             this.data = data;
             this.lenD = lenD;
@@ -21,7 +21,7 @@ namespace BubbleSorterNS
             int tmp = 0;
             for (int i = 0; i < lenD; i++)
             {
-                for (uint j = (lenD - 1); j >= (i + 1); j--)
+                for (int j = (lenD - 1); j >= (i + 1); j--)
                 {
                     if (data[j] < data[j - 1])
                     {

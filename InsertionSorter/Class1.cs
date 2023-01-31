@@ -7,8 +7,8 @@ namespace InsertionSorterNS
     public class InsertionSorter : ISorter
     {
         int[] data;
-        uint lenD;
-        public void Init(int[] data, uint lenD)
+        int lenD;
+        public void Init(int[] data, int lenD)
         {
             this.data = data;
             this.lenD = lenD;
