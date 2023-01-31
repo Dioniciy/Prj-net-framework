@@ -31,7 +31,7 @@ namespace WorkClassNS
         public string[] outArgs;
         ServerLogic server = new ServerLogic();
         public InitLogic init = new InitLogic();
-
+        ReflexionLogic reflex = new ReflexionLogic();
         public int useData;
         private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
@@ -76,53 +76,11 @@ namespace WorkClassNS
             }
         }
 
-        
-        
-        
 
-        class ReflectionSorter
-        {
-            public object ObjectSorter { get; set; }
-            public MethodInfo MethodInfoSort { get; set; }
-            public MethodInfo MethodInfoInit { get; set; }
-            public MethodInfo MethodInfoShow { get; set; }
-        }
-        public void LoadMethods()
-        {
-            sorters.Clear();
-            string[] array = Directory.GetFiles("../../../dll", "*.dll");
-            log.Info($"Exist {array.Length} dll files.");
-            foreach (string file in array)
-            {
-                Assembly asm = Assembly.LoadFrom(file);
-
-                Type[] types = asm.GetTypes();
-                foreach (Type t in types)
-                {
-                    Type[] interfaces = t.GetInterfaces();
-                    foreach (Type intf in interfaces)
-                    {
-                        if (intf == typeof(ISorter))
-                        {
-                            ConstructorInfo Constructor = t.GetConstructor(Type.EmptyTypes);
-                            object ClassObject = Constructor.Invoke(new object[] { });
-                            MethodInfo Init = t.GetMethod("Init");
-                            MethodInfo Sort = t.GetMethod("Sort", new Type[] { });
-                            MethodInfo Show = t.GetMethod("Show");
-                            sorters.Add(new ReflectionSorter() { MethodInfoSort = Sort, MethodInfoInit = Init, MethodInfoShow = Show, ObjectSorter = ClassObject });
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-      
-       
-        
         public string[] GetNamesMethods()
         {
-            LoadMethods();
-            Console.WriteLine("0. Start all ");
+            reflex.LoadMethods(ref sorters);
+            
             string[] buff; 
             buff = new string[sorters.Count];
             for(int i = 0; i < sorters.Count; i++)
@@ -132,30 +90,10 @@ namespace WorkClassNS
             //sorters.ForEach(method => [Console.WriteLine(sorters.IndexOf(method) + 1 + ". " + method.MethodInfoShow.Invoke(method.ObjectSorter, parameters: null)));
             return buff;
         }
-        //static 
-
-        
-       
-       
-
-
-        
-       
         
         public void SaveToDB()
-        {
-            string arr_str = "";
-            int[] buff_arr = new int[lng * height];
-            for (int j = 0; j < height; j++)
-            {
-                for (int i = 0; i < lng; i++)
-                {
-                    arr_str = string.Concat(arr_str, array[j, i].ToString());
-                    arr_str = string.Concat(arr_str, ' ');
-                    //buff_arr[lng * j + i] = array[j, i];
-                }
-            }
-            server.SaveToDB(arr_str, (int)height, (int)lng);
+        {           
+            server.SaveToDB(array, (int)height, (int)lng);
         }
         public void StartInitMethod(int useData)
         {

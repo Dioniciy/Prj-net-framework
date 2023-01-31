@@ -152,18 +152,8 @@ namespace WorkClassNS
             ArrayTwoDimensional u = server.ReadFromDB();
             if (u != null)
             {
-                int cnt = 0;
-                if (u.Lng > 1 && u.Height > 1) { lng = u.Lng; height = u.Height; arrayInited = true; }
-                else { arrayInited = false; }
-                //workClass.SetSize(height, lng);
-                for (int i = 0; i < height; i++)
-                {
-                    for (int k = 0; k < lng; k++)
-                    {
-                        array[i, k] = GetNumberFromString(u.Data.Substring(cnt), ref cnt);
-                    }
-                }
-                return true;
+               return InitArray(u.Data.Split(' '), u.Height, u.Lng);
+                
             }
             return false;
         }

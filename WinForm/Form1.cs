@@ -41,8 +41,9 @@ namespace WinForm
             //this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
             this.SetStyle((System.Windows.Forms.ControlStyles)0x10, true);
+            dataGridView.AutoSize = true;
             //this.SetStyle(ControlStyles.FixedHeight, false);
-            
+
         }
         private void Form1_ResizeBegin(Object sender, EventArgs e)
         {
@@ -125,8 +126,8 @@ namespace WinForm
             }
             
                 workProgram.StartInitMethod(InitFromList.SelectedIndex);
-            
-            
+
+            ShowArray();
 
         }
 
@@ -151,12 +152,14 @@ namespace WinForm
 
             dataGridView.Columns.Clear();
             dataGridView.Rows.Clear();
+            
+
             for (int i = 0; i < workProgram.GetLengh(); i++)
             {
                 dataGridView.Columns.Add("name" + i, i.ToString());
             }
             dataGridView.Rows.Add(workProgram.GetHeight());
-
+           
             for (int i = 0; i < workProgram.GetHeight(); i++)
             {
                 for (int j = 0; j < workProgram.GetLengh(); j++)
@@ -164,6 +167,37 @@ namespace WinForm
                     dataGridView[j, i].Value = (object)arrayNums[i, j];
                 }
             }
+
+            ResizeWindow(true);
+        }
+
+        void ResizeWindow(bool upDown) 
+        {
+            switch(upDown)
+            {
+                case true:
+                    if (dataGridView.Width + 20 > this.Width)
+                    {
+                        this.Width = dataGridView.Width + 50;
+                    }
+                    if (dataGridView.Height + dataGridView.Location.Y + 50 > this.Height)
+                    {
+                        this.Height = dataGridView.Height + dataGridView.Location.Y + 50;
+                    }
+                    
+                    break;
+                case false:
+                    if (dataGridView.Width + 20 < this.Width && dataGridView.Width + 20 < this.MinimumSize.Width)
+                    {
+                        this.Width = this.MinimumSize.Width;
+                    }
+                    if (dataGridView.Width + dataGridView.Location.Y+50 < this.Height && dataGridView.Height + dataGridView.Location.Y +50< this.MinimumSize.Height)
+                    {
+                        this.Height = this.MinimumSize.Height;
+                    }
+                    break;
+
+            }  
         }
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -172,12 +206,18 @@ namespace WinForm
 
         private void addColumnBt_Click(object sender, EventArgs e)
         {
-            dataGridView.Columns.Add("name" , "x");
+            dataGridView.Columns.Add("name" , $"{dataGridView.Columns.Count}");
+            ResizeWindow(true);
         }
 
         private void addRowBt_Click(object sender, EventArgs e)
         {
+            if(dataGridView.Columns.Count == 0)
+            {
+                dataGridView.Columns.Add("name", $"{dataGridView.Columns.Count}");
+            }
             dataGridView.Rows.Add();
+            ResizeWindow(true);
         }
 
         private void userInitBT_Click(object sender, EventArgs e)
@@ -190,6 +230,7 @@ namespace WinForm
         {
             dataGridView.Columns.Clear();
             dataGridView.Rows.Clear();
+            ResizeWindow(false);
         }
 
         private void pushDBButton_Click(object sender, EventArgs e)
@@ -263,6 +304,16 @@ namespace WinForm
         }
 
         private void statusStrip1_ItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolTip1_Popup_1(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void toolTip1_Popup_2(object sender, PopupEventArgs e)
         {
 
         }

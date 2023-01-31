@@ -18,8 +18,17 @@ namespace WorkClassNS
     }
     internal class ServerLogic
     {
-        public void SaveToDB(string arr_str, int height, int lng)
+        public void SaveToDB(int[,] array, int height, int lng)
         {
+            string arr_str = "";
+            for (int j = 0; j < height; j++)
+            {
+                for (int i = 0; i < lng; i++)
+                {
+                    arr_str = string.Concat(arr_str, array[j, i].ToString());
+                    arr_str = string.Concat(arr_str, ' ');                    
+                }
+            }
             using (ArrayContext db = new ArrayContext())
             {
                 ArrayTwoDimensional data = new ArrayTwoDimensional { Data = arr_str, Height = (int)height, Lng = (int)lng };
