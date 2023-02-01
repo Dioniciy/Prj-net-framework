@@ -67,7 +67,6 @@ namespace QuickSorterNS
                     }
                 }
             }
-            
         }
         public string Show()
         {

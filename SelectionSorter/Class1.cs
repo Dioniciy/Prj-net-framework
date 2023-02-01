@@ -17,7 +17,7 @@ namespace SelectionSorterNS
         {
             Stopwatch timer = new Stopwatch();
             timer.Start();
-            Console.WriteLine(Show() + " start");
+            //Console.WriteLine(Show() + " start");
             int j = 0;
             int tmp = 0;
             for (int i = 0; i < lenD; i++)
@@ -34,7 +34,7 @@ namespace SelectionSorterNS
                 data[i] = data[j];
                 data[j] = tmp;
             }
-            Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
+           // Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
             timer.Stop();
         }
         public string Show()
