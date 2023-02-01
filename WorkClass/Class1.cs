@@ -20,7 +20,6 @@ namespace WorkClassNS
 {
     public class WorkClass: ISubject
     {
-        //List<ReflectionSorter> sorters = new List<ReflectionSorter>();
         List<ISorter> sortersList;//= new List<ISorter>();
         int lng;
         int height;
@@ -46,30 +45,22 @@ namespace WorkClassNS
         {
             if (_instance == null)
             {
-                _instance = new WorkClass();
-               
+                _instance = new WorkClass();             
             }
             return _instance;
         }
-             
-        // The subscription management methods.
+            
         public void Attach(IObserver observer)
         {
-            //Console.WriteLine("Subject: Attached an observer.");
             this._observers.Add(observer);
         }
 
         public void Detach(IObserver observer)
         {
             this._observers.Remove(observer);
-            //Console.WriteLine("Subject: Detached an observer.");
         }
-
-        // Trigger an update in each subscriber.
         public void Notify()
         {
-            //Console.WriteLine("Subject: Notifying observers...");
-
             foreach (var observer in _observers)
             {
                 observer.Update(this);
@@ -79,20 +70,13 @@ namespace WorkClassNS
 
         public string[] GetNamesMethods()
         {
-            sortersList = reflex.LoadMethods();
-            
+            sortersList = reflex.LoadMethods();           
             string[] buff;
-            //buff = new string[sorters.Count];
-            //for(int i = 0; i < sorters.Count; i++)
-            //{
-            //    buff[i] = sorters[i].MethodInfoShow.Invoke(sorters[i].ObjectSorter, parameters: null).ToString();
-            //}
             buff = new string[sortersList.Count];
             for (int i = 0; i < sortersList.Count; i++)
             {
                 buff[i] = sortersList[i].Show();
             }
-            //sorters.ForEach(method => [Console.WriteLine(sorters.IndexOf(method) + 1 + ". " + method.MethodInfoShow.Invoke(method.ObjectSorter, parameters: null)));
             return buff;
         }
         
@@ -176,8 +160,6 @@ namespace WorkClassNS
                     break;
                 default:
                     if (num > 0) { num--; }
-                    //sorters[num].Init(buff_arr, lng * height);
-                    //sorters[num].Sort();
                     sortersList[num].Init(buff_arr, lng * height);
                     sortersList[num].Sort();
                     break;
