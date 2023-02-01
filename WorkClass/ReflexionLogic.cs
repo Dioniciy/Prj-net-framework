@@ -11,34 +11,31 @@ namespace WorkClassNS
 {
     internal class ReflexionLogic
     {
-        public void LoadMethods(ref List<ReflectionSorter> sorters)
-        {
-            sorters.Clear();
+        List<ISorter> sortersL = new List<ISorter>();
+        public List<ISorter> LoadMethods()
+        {    
             string[] array = Directory.GetFiles("../../../dll", "*.dll");
             //log.Info($"Exist {array.Length} dll files.");
             foreach (string file in array)
             {
                 Assembly asm = Assembly.LoadFrom(file);
-
-                Type[] types = asm.GetTypes();
-                foreach (Type t in types)
+                foreach (Type type in asm.GetTypes())
                 {
-                    Type[] interfaces = t.GetInterfaces();
-                    foreach (Type intf in interfaces)
+                    foreach (Type inteface in type.GetInterfaces())
                     {
-                        if (intf == typeof(ISorter))
+                        if (inteface == typeof(ISorter))
                         {
-                            ConstructorInfo Constructor = t.GetConstructor(Type.EmptyTypes);
-                            object ClassObject = Constructor.Invoke(new object[] { });
-                            MethodInfo Init = t.GetMethod("Init");
-                            MethodInfo Sort = t.GetMethod("Sort", new Type[] { });
-                            MethodInfo Show = t.GetMethod("Show");
-                            sorters.Add(new ReflectionSorter() { MethodInfoSort = Sort, MethodInfoInit = Init, MethodInfoShow = Show, ObjectSorter = ClassObject });
+                            sortersL.Add((ISorter)type.InvokeMember(null,
+                                                                        BindingFlags.DeclaredOnly |
+                                                                        BindingFlags.Public | BindingFlags.NonPublic |
+                                                                        BindingFlags.Instance | BindingFlags.CreateInstance,
+                                                                        null, null, null));
                             break;
                         }
                     }
                 }
             }
+            return sortersL;
         }
     }
 }

@@ -20,10 +20,10 @@ namespace WorkClassNS
 {
     public class WorkClass: ISubject
     {
-         List<ReflectionSorter> sorters = new List<ReflectionSorter>();
-
-           int lng;
-           int height;
+        //List<ReflectionSorter> sorters = new List<ReflectionSorter>();
+        List<ISorter> sortersList;//= new List<ISorter>();
+        int lng;
+        int height;
         public   int[,] array = new int[1000, 1000];
         public bool arrayInited = false;
         public bool arraySizeEntered;
@@ -79,13 +79,18 @@ namespace WorkClassNS
 
         public string[] GetNamesMethods()
         {
-            reflex.LoadMethods(ref sorters);
+            sortersList = reflex.LoadMethods();
             
-            string[] buff; 
-            buff = new string[sorters.Count];
-            for(int i = 0; i < sorters.Count; i++)
+            string[] buff;
+            //buff = new string[sorters.Count];
+            //for(int i = 0; i < sorters.Count; i++)
+            //{
+            //    buff[i] = sorters[i].MethodInfoShow.Invoke(sorters[i].ObjectSorter, parameters: null).ToString();
+            //}
+            buff = new string[sortersList.Count];
+            for (int i = 0; i < sortersList.Count; i++)
             {
-                buff[i] = sorters[i].MethodInfoShow.Invoke(sorters[i].ObjectSorter, parameters: null).ToString();
+                buff[i] = sortersList[i].Show();
             }
             //sorters.ForEach(method => [Console.WriteLine(sorters.IndexOf(method) + 1 + ". " + method.MethodInfoShow.Invoke(method.ObjectSorter, parameters: null)));
             return buff;
@@ -123,15 +128,15 @@ namespace WorkClassNS
         delegate void MessageHandler(string message);
         public void SortFunc(object someObj)
         {
-            if (someObj is ReflectionSorter obj)
+            if (someObj is ISorter obj)
             {
-                obj.MethodInfoSort.Invoke(obj.ObjectSorter, parameters: null);
+                obj.Sort();
             }
         }
         public void SelectSortMethod(int num = 0)
         {
             if (!arrayInited) { return; }
-            if (num > sorters.Count) { return; }
+            if (num > sortersList.Count) { return; }
             int[] buff_arr = new int[lng * height];
             for (int j = 0; j < height; j++)
             {
@@ -145,14 +150,14 @@ namespace WorkClassNS
             {
                 case 0:
                     int count = 0;
-                    foreach (var sorter in sorters)
+                    foreach (ISorter sorter in sortersList)
                     {
-                        sorter.MethodInfoInit.Invoke(sorter.ObjectSorter, new object[] { buff_arr, lng * height });
+                        sorter.Init( buff_arr, lng * height );
                         myThreads.Add(new Thread(new ParameterizedThreadStart(SortFunc)));
                     }
                     foreach (var thread in myThreads)
                     {
-                        thread.Start(sorters[count]);
+                        thread.Start(sortersList[count]);
                         count++;
                     }
 
@@ -173,8 +178,8 @@ namespace WorkClassNS
                     if (num > 0) { num--; }
                     //sorters[num].Init(buff_arr, lng * height);
                     //sorters[num].Sort();
-                    sorters[num].MethodInfoInit.Invoke(sorters[num].ObjectSorter, new object[] { buff_arr, lng * height });
-                    sorters[num].MethodInfoSort.Invoke(sorters[num].ObjectSorter, parameters: null);
+                    sortersList[num].Init(buff_arr, lng * height);
+                    sortersList[num].Sort();
                     break;
             }
 

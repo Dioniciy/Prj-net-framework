@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace WorkClassNS
 {
-    internal class ReflectionSorter
-    {
-        public object ObjectSorter { get; set; }
-        public MethodInfo MethodInfoSort { get; set; }
-        public MethodInfo MethodInfoInit { get; set; }
-        public MethodInfo MethodInfoShow { get; set; }
-    }
+    //internal class ReflectionSorter
+    //{
+    //    public object ObjectSorter { get; set; }
+    //    public MethodInfo MethodInfoSort { get; set; }
+    //    public MethodInfo MethodInfoInit { get; set; }
+    //    public MethodInfo MethodInfoShow { get; set; }
+    //}
 }
