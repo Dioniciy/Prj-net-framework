@@ -15,6 +15,7 @@ using System.Globalization;
 namespace WinForm
 {
     public partial class Form1 : Form, IObserver
+
     {
 
         WorkClass workProgram = WorkClass.GetInstance();
@@ -35,18 +36,30 @@ namespace WinForm
             Init();
 
             //this.FormBorderStyle = FormBorderStyle.Sizable;
+            //this.FormBorderStyle = FormBorderStyle.None;
             this.ControlBox = false;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Text = "";
-
-            //this.FormBorderStyle = FormBorderStyle.None;
+            
             this.DoubleBuffered = true;
             this.SetStyle((System.Windows.Forms.ControlStyles)0x10, true);
-            dataGridView.AutoSize = true;
-            //this.SetStyle(ControlStyles.FixedHeight, false);
+            dataGridView.AutoSize = true;       
+        }
+        void Init()
+        {
+            //languageToolStripMenuItem2.SelectedIndex = 1; 
+            workProgram.Attach(this);
+            sortersListBox.Items.Add("Start all");
+            string[] names = workProgram.GetNamesMethods();
+            foreach (string name in names)
+            {
+                sortersListBox.Items.Add(name);
+            }
+            sortersListBox.SelectedIndex = 0;
 
-            
+            InitFromList.SelectedIndex = 0;
+
         }
         private void ChangeLanguage(string lang)
         {
@@ -90,22 +103,7 @@ namespace WinForm
             base.WndProc(ref m);
         }
 
-        void Init()
-        {
-            //languageToolStripMenuItem2.SelectedIndex = 1; 
-
-            workProgram.Attach(this);
-            sortersListBox.Items.Add("Start all");
-            string[] names = workProgram.GetNamesMethods();
-            foreach (string name in names)
-            {
-                sortersListBox.Items.Add(name);
-            }
-            sortersListBox.SelectedIndex = 0;
-
-            InitFromList.SelectedIndex = 0;
-            
-        }
+        
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -120,7 +118,6 @@ namespace WinForm
                 {
                     for (int j = 0; j < dataGridView.Columns.Count; j++)
                     {
-                       
                         try 
                         { 
                             arrayNums[i, j] = dataGridView[j, i].Value.ToString();
@@ -129,12 +126,9 @@ namespace WinForm
                     }
                 }
                 workProgram.init.InitArray(arrayNums, dataGridView.Rows.Count - 1, dataGridView.Columns.Count);
-            }
-            
-                workProgram.StartInitMethod(InitFromList.SelectedIndex);
-
+            }          
+            workProgram.StartInitMethod(InitFromList.SelectedIndex);
             ShowArray();
-
         }
 
         private void sortersListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -155,11 +149,8 @@ namespace WinForm
         {
             if (!workProgram.arrayInited) { return; }
             string[,] arrayNums = workProgram.GetDataAsStringArray();
-
             dataGridView.Columns.Clear();
-            dataGridView.Rows.Clear();
-            
-
+            dataGridView.Rows.Clear();           
             for (int i = 0; i < workProgram.GetLengh(); i++)
             {
                 dataGridView.Columns.Add("name" + i, i.ToString());
@@ -173,7 +164,6 @@ namespace WinForm
                     dataGridView[j, i].Value = (object)arrayNums[i, j];
                 }
             }
-
             ResizeWindow(true);
         }
 
@@ -226,12 +216,6 @@ namespace WinForm
             ResizeWindow(true);
         }
 
-        private void userInitBT_Click(object sender, EventArgs e)
-        {
-            
-
-        }
-
         private void deleteTableBt_Click(object sender, EventArgs e)
         {
             dataGridView.Columns.Clear();
@@ -251,20 +235,11 @@ namespace WinForm
         private void startSortBT_Click(object sender, EventArgs e)
         {
             workProgram.SelectSortMethod(sortersListBox.SelectedIndex);
+            backgroundWorker1.RunWorkerAsync();
             ShowArray();
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
@@ -279,49 +254,12 @@ namespace WinForm
 
         }
 
-    
-
-        private void Exit_bt_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Exit_bt_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-           
-        }
-
-        private void toolStripContainer3_ContentPanel_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void statusStrip1_ItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void toolTip1_Popup_1(object sender, PopupEventArgs e)
-        {
-
-        }
-
-        private void toolTip1_Popup_2(object sender, PopupEventArgs e)
-        {
-
-        }
-
-        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
@@ -351,6 +289,35 @@ namespace WinForm
         private void моваToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            for (int i = 1; i <= 10; i++)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    System.Threading.Thread.Sleep(500);
+                    worker.ReportProgress(i * 10);
+                }
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            toolStripProgressBar1.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolStripProgressBar1.Value = toolStripProgressBar1.Maximum;
         }
     }
 }

@@ -66,6 +66,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.Exit_bt = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -74,8 +75,8 @@
             // 
             // InitFromList
             // 
-            resources.ApplyResources(this.InitFromList, "InitFromList");
             this.InitFromList.BackColor = System.Drawing.SystemColors.ScrollBar;
+            resources.ApplyResources(this.InitFromList, "InitFromList");
             this.InitFromList.FormattingEnabled = true;
             this.InitFromList.Items.AddRange(new object[] {
             resources.GetString("InitFromList.Items"),
@@ -83,7 +84,6 @@
             resources.GetString("InitFromList.Items2"),
             resources.GetString("InitFromList.Items3")});
             this.InitFromList.Name = "InitFromList";
-            this.toolTip1.SetToolTip(this.InitFromList, resources.GetString("InitFromList.ToolTip"));
             this.InitFromList.SelectedIndexChanged += new System.EventHandler(this.InitFromList_SelectedIndexChanged);
             // 
             // label1
@@ -91,27 +91,24 @@
             resources.ApplyResources(this.label1, "label1");
             this.label1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // initBt
             // 
-            resources.ApplyResources(this.initBt, "initBt");
             this.initBt.BackColor = System.Drawing.Color.DimGray;
             this.initBt.Cursor = System.Windows.Forms.Cursors.Arrow;
+            resources.ApplyResources(this.initBt, "initBt");
             this.initBt.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.initBt.Name = "initBt";
-            this.toolTip1.SetToolTip(this.initBt, resources.GetString("initBt.ToolTip"));
             this.initBt.UseVisualStyleBackColor = false;
             this.initBt.Click += new System.EventHandler(this.initBt_Click);
             // 
             // startSortBT
             // 
-            resources.ApplyResources(this.startSortBT, "startSortBT");
             this.startSortBT.BackColor = System.Drawing.Color.DimGray;
+            resources.ApplyResources(this.startSortBT, "startSortBT");
             this.startSortBT.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.startSortBT.Name = "startSortBT";
-            this.toolTip1.SetToolTip(this.startSortBT, resources.GetString("startSortBT.ToolTip"));
             this.startSortBT.UseVisualStyleBackColor = false;
             this.startSortBT.Click += new System.EventHandler(this.startSortBT_Click);
             // 
@@ -120,102 +117,93 @@
             resources.ApplyResources(this.labelSort, "labelSort");
             this.labelSort.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.labelSort.Name = "labelSort";
-            this.toolTip1.SetToolTip(this.labelSort, resources.GetString("labelSort.ToolTip"));
             // 
             // sortersListBox
             // 
-            resources.ApplyResources(this.sortersListBox, "sortersListBox");
             this.sortersListBox.BackColor = System.Drawing.SystemColors.ScrollBar;
+            resources.ApplyResources(this.sortersListBox, "sortersListBox");
             this.sortersListBox.FormattingEnabled = true;
             this.sortersListBox.Name = "sortersListBox";
-            this.toolTip1.SetToolTip(this.sortersListBox, resources.GetString("sortersListBox.ToolTip"));
             this.sortersListBox.SelectedIndexChanged += new System.EventHandler(this.sortersListBox_SelectedIndexChanged);
             // 
             // button1
             // 
-            resources.ApplyResources(this.button1, "button1");
             this.button1.BackColor = System.Drawing.Color.DimGray;
+            resources.ApplyResources(this.button1, "button1");
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button1.Name = "button1";
-            this.toolTip1.SetToolTip(this.button1, resources.GetString("button1.ToolTip"));
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dataGridView
             // 
-            resources.ApplyResources(this.dataGridView, "dataGridView");
             this.dataGridView.AllowDrop = true;
             this.dataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resources.ApplyResources(this.dataGridView, "dataGridView");
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.toolTip1.SetToolTip(this.dataGridView, resources.GetString("dataGridView.ToolTip"));
             this.dataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellContentClick);
             // 
             // pushDBButton
             // 
-            resources.ApplyResources(this.pushDBButton, "pushDBButton");
             this.pushDBButton.BackColor = System.Drawing.Color.DimGray;
+            resources.ApplyResources(this.pushDBButton, "pushDBButton");
             this.pushDBButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.pushDBButton.Name = "pushDBButton";
-            this.toolTip1.SetToolTip(this.pushDBButton, resources.GetString("pushDBButton.ToolTip"));
             this.pushDBButton.UseVisualStyleBackColor = false;
             this.pushDBButton.Click += new System.EventHandler(this.pushDBButton_Click);
             // 
             // addColumnBt
             // 
-            resources.ApplyResources(this.addColumnBt, "addColumnBt");
             this.addColumnBt.BackColor = System.Drawing.Color.DimGray;
             this.addColumnBt.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.addColumnBt, "addColumnBt");
             this.addColumnBt.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.addColumnBt.Name = "addColumnBt";
-            this.toolTip1.SetToolTip(this.addColumnBt, resources.GetString("addColumnBt.ToolTip"));
             this.addColumnBt.UseVisualStyleBackColor = false;
             this.addColumnBt.Click += new System.EventHandler(this.addColumnBt_Click);
             // 
             // addRowBt
             // 
-            resources.ApplyResources(this.addRowBt, "addRowBt");
             this.addRowBt.BackColor = System.Drawing.Color.DimGray;
+            resources.ApplyResources(this.addRowBt, "addRowBt");
             this.addRowBt.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.addRowBt.Name = "addRowBt";
-            this.toolTip1.SetToolTip(this.addRowBt, resources.GetString("addRowBt.ToolTip"));
             this.addRowBt.UseVisualStyleBackColor = false;
             this.addRowBt.Click += new System.EventHandler(this.addRowBt_Click);
             // 
             // deleteTableBt
             // 
-            resources.ApplyResources(this.deleteTableBt, "deleteTableBt");
             this.deleteTableBt.BackColor = System.Drawing.Color.DimGray;
+            resources.ApplyResources(this.deleteTableBt, "deleteTableBt");
             this.deleteTableBt.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.deleteTableBt.Name = "deleteTableBt";
-            this.toolTip1.SetToolTip(this.deleteTableBt, resources.GetString("deleteTableBt.ToolTip"));
             this.deleteTableBt.UseVisualStyleBackColor = false;
             this.deleteTableBt.Click += new System.EventHandler(this.deleteTableBt_Click);
             // 
             // languageToolStripMenuItem
             // 
-            resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
             // 
             // toolStripMenuItem1
             // 
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             // 
             // languageToolStripMenuItem1
             // 
-            resources.ApplyResources(this.languageToolStripMenuItem1, "languageToolStripMenuItem1");
             this.languageToolStripMenuItem1.Name = "languageToolStripMenuItem1";
+            resources.ApplyResources(this.languageToolStripMenuItem1, "languageToolStripMenuItem1");
             // 
             // toolStripMenuItem2
             // 
-            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
             // 
             // fileToolStripMenuItem1
             // 
-            resources.ApplyResources(this.fileToolStripMenuItem1, "fileToolStripMenuItem1");
             this.fileToolStripMenuItem1.BackColor = System.Drawing.Color.Transparent;
             this.fileToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem1,
@@ -224,6 +212,7 @@
             this.exitToolStripMenuItem1});
             this.fileToolStripMenuItem1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.fileToolStripMenuItem1.Name = "fileToolStripMenuItem1";
+            resources.ApplyResources(this.fileToolStripMenuItem1, "fileToolStripMenuItem1");
             // 
             // newToolStripMenuItem1
             // 
@@ -237,44 +226,44 @@
             // 
             // toolStripSeparator6
             // 
-            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
             this.toolStripSeparator6.Name = "toolStripSeparator6";
+            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
             // 
             // exitToolStripMenuItem1
             // 
-            resources.ApplyResources(this.exitToolStripMenuItem1, "exitToolStripMenuItem1");
             this.exitToolStripMenuItem1.BackColor = System.Drawing.SystemColors.Control;
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            resources.ApplyResources(this.exitToolStripMenuItem1, "exitToolStripMenuItem1");
             // 
             // toolsToolStripMenuItem1
             // 
-            resources.ApplyResources(this.toolsToolStripMenuItem1, "toolsToolStripMenuItem1");
             this.toolsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.customizeToolStripMenuItem1,
             this.optionsToolStripMenuItem1});
             this.toolsToolStripMenuItem1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.toolsToolStripMenuItem1.Name = "toolsToolStripMenuItem1";
+            resources.ApplyResources(this.toolsToolStripMenuItem1, "toolsToolStripMenuItem1");
             // 
             // customizeToolStripMenuItem1
             // 
-            resources.ApplyResources(this.customizeToolStripMenuItem1, "customizeToolStripMenuItem1");
             this.customizeToolStripMenuItem1.Name = "customizeToolStripMenuItem1";
+            resources.ApplyResources(this.customizeToolStripMenuItem1, "customizeToolStripMenuItem1");
             // 
             // optionsToolStripMenuItem1
             // 
-            resources.ApplyResources(this.optionsToolStripMenuItem1, "optionsToolStripMenuItem1");
             this.optionsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.моваToolStripMenuItem});
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
+            resources.ApplyResources(this.optionsToolStripMenuItem1, "optionsToolStripMenuItem1");
             // 
             // моваToolStripMenuItem
             // 
-            resources.ApplyResources(this.моваToolStripMenuItem, "моваToolStripMenuItem");
             this.моваToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.моваToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.моваToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.languageToolStripMenuItem2});
             this.моваToolStripMenuItem.Name = "моваToolStripMenuItem";
+            resources.ApplyResources(this.моваToolStripMenuItem, "моваToolStripMenuItem");
             this.моваToolStripMenuItem.Click += new System.EventHandler(this.моваToolStripMenuItem_Click);
             // 
             // languageToolStripMenuItem2
@@ -290,27 +279,27 @@
             // 
             // helpToolStripMenuItem
             // 
-            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator11,
             this.aboutToolStripMenuItem1});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.SystemColors.AppWorkspace;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             // 
             // toolStripSeparator11
             // 
-            resources.ApplyResources(this.toolStripSeparator11, "toolStripSeparator11");
             this.toolStripSeparator11.Name = "toolStripSeparator11";
+            resources.ApplyResources(this.toolStripSeparator11, "toolStripSeparator11");
             // 
             // aboutToolStripMenuItem1
             // 
-            resources.ApplyResources(this.aboutToolStripMenuItem1, "aboutToolStripMenuItem1");
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
+            resources.ApplyResources(this.aboutToolStripMenuItem1, "aboutToolStripMenuItem1");
             // 
             // menuStrip1
             // 
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.logoToolStripMenuItem,
@@ -319,13 +308,12 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip1.Name = "menuStrip1";
-            this.toolTip1.SetToolTip(this.menuStrip1, resources.GetString("menuStrip1.ToolTip"));
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // logoToolStripMenuItem
             // 
-            resources.ApplyResources(this.logoToolStripMenuItem, "logoToolStripMenuItem");
             this.logoToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            resources.ApplyResources(this.logoToolStripMenuItem, "logoToolStripMenuItem");
             this.logoToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
             this.logoToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.logoToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
@@ -334,35 +322,33 @@
             // 
             // statusStrip1
             // 
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.AccessibleRole = System.Windows.Forms.AccessibleRole.StatusBar;
             this.statusStrip1.BackColor = System.Drawing.Color.Black;
             this.statusStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1});
+            resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.Name = "statusStrip1";
-            this.toolTip1.SetToolTip(this.statusStrip1, resources.GetString("statusStrip1.ToolTip"));
             this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked_1);
             // 
             // toolStripProgressBar1
             // 
-            resources.ApplyResources(this.toolStripProgressBar1, "toolStripProgressBar1");
             this.toolStripProgressBar1.ForeColor = System.Drawing.Color.Goldenrod;
             this.toolStripProgressBar1.Margin = new System.Windows.Forms.Padding(500, 3, 1, 3);
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Value = 25;
+            resources.ApplyResources(this.toolStripProgressBar1, "toolStripProgressBar1");
+            this.toolStripProgressBar1.Value = 100;
             // 
             // trackBar1
             // 
-            resources.ApplyResources(this.trackBar1, "trackBar1");
             this.trackBar1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.trackBar1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBar1.LargeChange = 10;
+            resources.ApplyResources(this.trackBar1, "trackBar1");
             this.trackBar1.Maximum = 100;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.SmallChange = 5;
             this.trackBar1.TickFrequency = 10;
-            this.toolTip1.SetToolTip(this.trackBar1, resources.GetString("trackBar1.ToolTip"));
             this.trackBar1.Value = 100;
             // 
             // toolTip1
@@ -381,17 +367,24 @@
             this.Exit_bt.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkViolet;
             this.Exit_bt.ForeColor = System.Drawing.Color.Transparent;
             this.Exit_bt.Name = "Exit_bt";
-            this.toolTip1.SetToolTip(this.Exit_bt, resources.GetString("Exit_bt.ToolTip"));
             this.Exit_bt.UseVisualStyleBackColor = true;
             this.Exit_bt.Click += new System.EventHandler(this.Exit_bt_Click_1);
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
             // Form1
             // 
-            resources.ApplyResources(this, "$this");
             this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            resources.ApplyResources(this, "$this");
             this.ControlBox = false;
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.menuStrip1);
@@ -413,7 +406,6 @@
             this.DoubleBuffered = true;
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.TransparencyKey = System.Drawing.Color.DarkMagenta;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
@@ -465,6 +457,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem моваToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox languageToolStripMenuItem2;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

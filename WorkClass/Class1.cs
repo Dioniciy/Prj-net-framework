@@ -26,7 +26,7 @@ namespace WorkClassNS
         public   int[,] array = new int[1000, 1000];
         public bool arrayInited = false;
         public bool arraySizeEntered;
-       
+        public bool SortComplete;
         public string[] outArgs;
         ServerLogic server = new ServerLogic();
         public InitLogic init = new InitLogic();
@@ -67,10 +67,22 @@ namespace WorkClassNS
             }
         }
 
-
+        void SortersProgresEvents()
+        {
+            SortComplete = true;
+            Notify();
+        }
+        void AddSorterssIvents()
+        {
+            foreach(ISorter sorter in sortersList)
+            {
+                sorter.Attach(SorterCompleteEvent);
+            }
+        }
         public string[] GetNamesMethods()
         {
-            sortersList = reflex.LoadMethods();           
+            sortersList = reflex.LoadMethods();
+            AddSorterssIvents();
             string[] buff;
             buff = new string[sortersList.Count];
             for (int i = 0; i < sortersList.Count; i++)
@@ -121,6 +133,9 @@ namespace WorkClassNS
         {
             if (!arrayInited) { return; }
             if (num > sortersList.Count) { return; }
+
+            SortComplete = false;
+
             int[] buff_arr = new int[lng * height];
             for (int j = 0; j < height; j++)
             {

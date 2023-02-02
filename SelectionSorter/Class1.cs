@@ -8,6 +8,11 @@ namespace SelectionSorterNS
     {
         int[] data;
         int lenD;
+        event Notify ProcessCompleted;
+        public void Attach(Notify observer)
+        {
+            ProcessCompleted += observer;
+        }
         public void Init(int[] data, int lenD)
         {
             this.data = data;
@@ -36,10 +41,19 @@ namespace SelectionSorterNS
             }
            // Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
             timer.Stop();
+            OnProcessCompleted();
         }
         public string Show()
         {
             return "Selection sorter";
+        }
+        protected virtual void OnProcessCompleted() //protected virtual method
+        {
+            //if ProcessCompleted is not null then call delegate
+            if (ProcessCompleted != null)
+            {
+                ProcessCompleted?.Invoke();
+            }
         }
     }
 }
