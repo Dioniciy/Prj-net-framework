@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using WorkClassNS;
 using System.Xml.Linq;
+using System.Globalization;
 
 namespace WinForm
 {
@@ -28,7 +29,8 @@ namespace WinForm
         //public event EventHandler ResizeBegin;
         public Form1()
         {
-            
+            //CultureInfo.CurrentUICulture = new CultureInfo(CultureInfo.InstalledUICulture.Name);
+            CultureInfo.CurrentUICulture = new CultureInfo(InputLanguage.CurrentInputLanguage.Culture.Name);
             InitializeComponent();
             Init();
 
@@ -44,17 +46,18 @@ namespace WinForm
             dataGridView.AutoSize = true;
             //this.SetStyle(ControlStyles.FixedHeight, false);
 
+            
         }
-        private void Form1_ResizeBegin(Object sender, EventArgs e)
+        private void ChangeLanguage(string lang)
         {
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(Form1));
+            foreach (Control c in this.Controls)
+            {
 
-            MessageBox.Show("You are in the Form.ResizeBegin event.");
+                resources.ApplyResources(c, c.Name, new CultureInfo(lang));
+            }
         }
-        private void Form1_ResizeEnd(Object sender, EventArgs e)
-        {
 
-            MessageBox.Show("You are in the Form.ResizeEnd event.");
-        }
         private const int cGrip = 30;      // Grip size
         private const int cCaption = 30;   // Caption bar height;
 
@@ -89,6 +92,8 @@ namespace WinForm
 
         void Init()
         {
+            //languageToolStripMenuItem2.SelectedIndex = 1; 
+
             workProgram.Attach(this);
             sortersListBox.Items.Add("Start all");
             string[] names = workProgram.GetNamesMethods();
@@ -99,6 +104,7 @@ namespace WinForm
             sortersListBox.SelectedIndex = 0;
 
             InitFromList.SelectedIndex = 0;
+            
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -273,10 +279,7 @@ namespace WinForm
 
         }
 
-        private void languageToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-
-        }
+    
 
         private void Exit_bt_Click(object sender, EventArgs e)
         {
@@ -314,6 +317,38 @@ namespace WinForm
         }
 
         private void toolTip1_Popup_2(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void languageToolStripMenuItem2_SelectedItemChanged(object sender, EventArgs e)
+        {
+            
+            if (languageToolStripMenuItem2.SelectedItem.ToString() == "English")
+            {
+                ChangeLanguage("en");
+            }
+            else if (languageToolStripMenuItem2.SelectedItem.ToString() == "Українська")
+            {
+                ChangeLanguage("uk-UA");
+            }
+            else
+            {
+                ChangeLanguage("fr-FR");
+            }
+        }
+
+        private void languageToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void моваToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
