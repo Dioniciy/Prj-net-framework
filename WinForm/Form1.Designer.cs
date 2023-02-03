@@ -345,11 +345,12 @@
             this.trackBar1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBar1.LargeChange = 10;
             resources.ApplyResources(this.trackBar1, "trackBar1");
-            this.trackBar1.Maximum = 100;
+            this.trackBar1.Maximum = 500;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.SmallChange = 5;
             this.trackBar1.TickFrequency = 10;
             this.trackBar1.Value = 100;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // toolTip1
             // 

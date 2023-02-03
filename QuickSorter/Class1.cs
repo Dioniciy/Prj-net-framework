@@ -7,7 +7,10 @@ namespace QuickSorterNS
     public class QuickSorter : ISorter
     {
         int[] data;
-        int lenD;
+        int lng;
+        int delay;
+        bool finished = false;
+        int progres = 0;
         event Notify ProcessCompleted;
         public void Attach(Notify observer)
         {
@@ -16,17 +19,26 @@ namespace QuickSorterNS
         public void Init(int[] data, int lenD)
         {
             this.data = data;
-            this.lenD = lenD;
+            this.lng = lenD;
+        }
+        public void SetSpeed(int delay)
+        {
+            this.delay = delay;
         }
         public void Sort()
         {
+            finished = false;
+            progres = 0;
+            OnProcessUpdate();
             Stopwatch timer = new Stopwatch();
             timer.Start();
             Console.WriteLine(Show() + " start");
-            Sort(data, lenD);            
+            Sort(data, lng);            
             Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
             timer.Stop();
-            OnProcessCompleted();
+            finished = true;
+            progres = 100;
+            OnProcessUpdate();
         }
         public void Sort(int[] data, int len)
         {
@@ -57,8 +69,10 @@ namespace QuickSorterNS
                 }
                 Sort(l, j);
                 Sort(r, k);
+
                 for (int cnt = 0; cnt < lenD; cnt++)
                 {
+                    System.Threading.Thread.Sleep(delay);
                     if (cnt < j)
                     {
                         data[cnt] = l[cnt]; ;
@@ -78,12 +92,12 @@ namespace QuickSorterNS
         {
             return "Quick sorter";
         }
-        protected virtual void OnProcessCompleted() //protected virtual method
+        protected virtual void OnProcessUpdate() //protected virtual method
         {
             //if ProcessCompleted is not null then call delegate
             if (ProcessCompleted != null)
             {
-                ProcessCompleted?.Invoke();
+                ProcessCompleted?.Invoke(progres, finished);
             }
         }
     }

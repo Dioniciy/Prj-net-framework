@@ -19,13 +19,19 @@ namespace WinForm
     {
 
         WorkClass workProgram = WorkClass.GetInstance();
+        //BackgroundWorker worker;
        
         public void Update(ISubject subject)
         {
-            if ((subject as WorkClass).arraySizeEntered)
+            if ((subject as WorkClass).SortCompleted)
             {
-                Console.WriteLine("ConcreteObserverA: Reacted to the event.");
+                backgroundWorker1.CancelAsync();
             }
+            else
+            {
+                backgroundWorker1.ReportProgress((subject as WorkClass).progres);
+            }
+
         }
         //public event EventHandler ResizeBegin;
         public Form1()
@@ -49,6 +55,7 @@ namespace WinForm
         void Init()
         {
             //languageToolStripMenuItem2.SelectedIndex = 1; 
+            //worker = new BackgroundWorker1;
             workProgram.Attach(this);
             sortersListBox.Items.Add("Start all");
             string[] names = workProgram.GetNamesMethods();
@@ -234,8 +241,9 @@ namespace WinForm
 
         private void startSortBT_Click(object sender, EventArgs e)
         {
-            workProgram.SelectSortMethod(sortersListBox.SelectedIndex);
             backgroundWorker1.RunWorkerAsync();
+            workProgram.SelectSortMethod(sortersListBox.SelectedIndex);
+            
             ShowArray();
         }
 
@@ -293,20 +301,16 @@ namespace WinForm
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker worker = sender as BackgroundWorker;
-
-            for (int i = 1; i <= 10; i++)
+            // worker = sender as BackgroundWorker;
+            while(true)
+            //for (int i = 1; i <= 10; i++)
             {
-                if (worker.CancellationPending == true)
+                if (backgroundWorker1.CancellationPending == true)
                 {
                     e.Cancel = true;
                     break;
                 }
-                else
-                {
-                    System.Threading.Thread.Sleep(500);
-                    worker.ReportProgress(i * 10);
-                }
+                
             }
         }
 
@@ -318,6 +322,13 @@ namespace WinForm
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolStripProgressBar1.Value = toolStripProgressBar1.Maximum;
+            backgroundWorker1.Dispose();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+
+            workProgram.ChangeSpeedEvent(trackBar1.Value);
         }
     }
 }

@@ -8,6 +8,9 @@ namespace InsertionSorterNS
     {
         int[] data;
         int lenD;
+        int delay = 0;
+        bool finished = false;
+        int progres = 0;
         event Notify ProcessCompleted;
         public void Attach(Notify observer)
         {
@@ -18,7 +21,11 @@ namespace InsertionSorterNS
             this.data = data;
             this.lenD = lenD;
         }
-        
+        public void SetSpeed(int delay)
+        {
+            this.delay = delay;
+        }
+
 
         public void Sort()
         {
@@ -29,6 +36,12 @@ namespace InsertionSorterNS
             int i = 0;
             for (int j = 1; j < lenD; j++)
             {
+                if (i > (lenD * progres / 100))
+                {
+                    progres += 10;
+                    OnProcessUpdate();
+                }
+                System.Threading.Thread.Sleep(delay);
                 key = data[j];
                 i = j - 1;
                 while (i >= 0 && data[i] > key)
@@ -40,18 +53,20 @@ namespace InsertionSorterNS
             }
             Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
             timer.Stop();
-            OnProcessCompleted();
+            finished = true;
+            progres = 100;
+            OnProcessUpdate();
         }
         public string Show()
         {
             return "Insertion sorter";
         }
-        protected virtual void OnProcessCompleted() //protected virtual method
+        protected virtual void OnProcessUpdate() //protected virtual method
         {
             //if ProcessCompleted is not null then call delegate
             if(ProcessCompleted !=null)
             {
-                ProcessCompleted?.Invoke();
+                ProcessCompleted?.Invoke(progres, finished);
             }           
         }       
     }

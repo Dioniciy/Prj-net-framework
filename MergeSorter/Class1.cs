@@ -8,6 +8,9 @@ namespace MergeSorterNS
     {
         int[] data;
         int lenD;
+        int delay;
+        bool finished = false;
+        int progres = 0;
         event Notify ProcessCompleted;
         public void Attach(Notify observer)
         {
@@ -18,15 +21,24 @@ namespace MergeSorterNS
             this.data = data;
             this.lenD = lenD;
         }
+        public void SetSpeed(int delay)
+        {
+            this.delay = delay;
+        }
         public void Sort()
         {
+            finished = false;
+            progres = 0;
+            OnProcessUpdate();
             Stopwatch timer = new Stopwatch();
             timer.Start();
             Console.WriteLine(Show() + " start");
             Sort(data, lenD);
             Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
             timer.Stop();
-            OnProcessCompleted();
+            finished = true;
+            progres = 100;
+            OnProcessUpdate();
         }
         public void Sort(int[] data, int lenD)
         {
@@ -50,6 +62,7 @@ namespace MergeSorterNS
                 Sort(L, middle);
                 Sort(R, rem);
                 merge(data, lenD, L, middle, R, rem);
+                System.Threading.Thread.Sleep(delay);
             }
             
         }
@@ -88,12 +101,12 @@ namespace MergeSorterNS
         {
             return "Merge sorter";
         }
-        protected virtual void OnProcessCompleted() //protected virtual method
+        protected virtual void OnProcessUpdate() //protected virtual method
         {
             //if ProcessCompleted is not null then call delegate
             if (ProcessCompleted != null)
             {
-                ProcessCompleted?.Invoke();
+                ProcessCompleted?.Invoke(progres, finished);
             }
         }
     }

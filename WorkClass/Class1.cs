@@ -26,11 +26,14 @@ namespace WorkClassNS
         public   int[,] array = new int[1000, 1000];
         public bool arrayInited = false;
         public bool arraySizeEntered;
-        public bool SortComplete;
+        public bool SortCompleted;
+        public int progres = 0;
         public string[] outArgs;
         ServerLogic server = new ServerLogic();
         public InitLogic init = new InitLogic();
         ReflexionLogic reflex = new ReflexionLogic();
+        public delegate void SetSpeedEvent(int delay);
+        public static event SetSpeedEvent setSpeedEvente;
         public int useData;
         private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
@@ -66,23 +69,34 @@ namespace WorkClassNS
                 observer.Update(this);
             }
         }
-
-        void SortersProgresEvents()
+        public void ChangeSpeedEvent(int delay)
         {
-            SortComplete = true;
+            setSpeedEvente?.Invoke(delay );
+        }
+        void SortersProgresEvents(int progres, bool finished)
+        {
+            SortCompleted = finished;
+            this.progres = progres;
             Notify();
         }
         void AddSorterssIvents()
         {
             foreach(ISorter sorter in sortersList)
             {
-                sorter.Attach(SorterCompleteEvent);
+                sorter.Attach(SortersProgresEvents);
+                setSpeedEvente += sorter.SetSpeed;
             }
+
         }
-        public string[] GetNamesMethods()
+        void LoadSorters()
         {
             sortersList = reflex.LoadMethods();
             AddSorterssIvents();
+
+        }
+        public string[] GetNamesMethods()
+        {
+            LoadSorters();
             string[] buff;
             buff = new string[sortersList.Count];
             for (int i = 0; i < sortersList.Count; i++)
@@ -134,7 +148,7 @@ namespace WorkClassNS
             if (!arrayInited) { return; }
             if (num > sortersList.Count) { return; }
 
-            SortComplete = false;
+            SortCompleted = false;
 
             int[] buff_arr = new int[lng * height];
             for (int j = 0; j < height; j++)
