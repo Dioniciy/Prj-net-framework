@@ -14,7 +14,7 @@ using System.Data.Entity;
 using System.Runtime.Remoting.Contexts;
 using System.Globalization;
 using System.Data.SqlClient;
-
+using System.ComponentModel;
 
 namespace WorkClassNS
 {
@@ -143,13 +143,13 @@ namespace WorkClassNS
                 obj.Sort();
             }
         }
-        public void SelectSortMethod(int num = 0)
+        public void StartSortMethod(int num)
         {
             if (!arrayInited) { return; }
             if (num > sortersList.Count) { return; }
-
+           
             SortCompleted = false;
-
+            Notify();
             int[] buff_arr = new int[lng * height];
             for (int j = 0; j < height; j++)
             {
@@ -201,6 +201,7 @@ namespace WorkClassNS
                     array[j, i] = buff_arr[lng * j + i];
                 }
             }
+            SortCompleted = true;
         }
 
         public string[,] GetDataAsStringArray()

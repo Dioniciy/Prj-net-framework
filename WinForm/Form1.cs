@@ -11,29 +11,35 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using WorkClassNS;
 using System.Xml.Linq;
 using System.Globalization;
+using System.Threading;
 
 namespace WinForm
 {
     public partial class Form1 : Form, IObserver
-
     {
 
         WorkClass workProgram = WorkClass.GetInstance();
-        //BackgroundWorker worker;
-       
+        bool flagUpdate = false;
+        int progresWork = 0;
         public void Update(ISubject subject)
         {
+            if (backgroundWorker1.IsBusy != true)
+            {
+                backgroundWorker1.RunWorkerAsync();
+            }
             if ((subject as WorkClass).SortCompleted)
             {
                 backgroundWorker1.CancelAsync();
             }
             else
             {
-                backgroundWorker1.ReportProgress((subject as WorkClass).progres);
+                flagUpdate = true;
+                progresWork = (subject as WorkClass).progres;
+                
+                //this.Refresh();
             }
-
-        }
-        //public event EventHandler ResizeBegin;
+            
+        }       
         public Form1()
         {
             //CultureInfo.CurrentUICulture = new CultureInfo(CultureInfo.InstalledUICulture.Name);
@@ -238,13 +244,26 @@ namespace WinForm
             }
             
         }
+        Thread sortTrhread;
+        void SortStart(object obj)
+        {
 
+            //sortTrhread.Start(sortersListBox.SelectedIndex);
+            workProgram.StartSortMethod((int)obj);
+        }
         private void startSortBT_Click(object sender, EventArgs e)
         {
-            backgroundWorker1.RunWorkerAsync();
-            workProgram.SelectSortMethod(sortersListBox.SelectedIndex);
+            //workProgram.StartSortMethod(sortersListBox.SelectedIndex);
             
-            ShowArray();
+             
+            sortTrhread = new Thread(new ParameterizedThreadStart(SortStart));
+            sortTrhread.Start(sortersListBox.SelectedIndex);
+            //Thread sortTrhread;
+            //sortTrhread  = new Thread(new ParameterizedThreadStart(StartSort));
+            //sortTrhread.Start(sortersListBox.SelectedIndex);
+            //workProgram.SelectSortMethod(sortersListBox.SelectedIndex);
+
+            //ShowArray();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -301,28 +320,36 @@ namespace WinForm
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            // worker = sender as BackgroundWorker;
-            while(true)
-            //for (int i = 1; i <= 10; i++)
+            BackgroundWorker worker = sender as BackgroundWorker;
+            //SortStart( worker,  e);
+            //SortStart(worker);
+
+            //SortStart();
+            while (true)
             {
                 if (backgroundWorker1.CancellationPending == true)
                 {
                     e.Cancel = true;
                     break;
                 }
-                
+                if (flagUpdate)
+                {
+                    flagUpdate = false;
+                    backgroundWorker1.ReportProgress(progresWork);
+                }
             }
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             toolStripProgressBar1.Value = e.ProgressPercentage;
+            //ShowArray();
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            toolStripProgressBar1.Value = toolStripProgressBar1.Maximum;
-            backgroundWorker1.Dispose();
+            //backgroundWorker1.Dispose();
+            ShowArray();
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

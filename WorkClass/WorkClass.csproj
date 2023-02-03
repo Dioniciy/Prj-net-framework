@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Array2Dim.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="WorkClass.cs" />
     <Compile Include="FileLogic.cs" />
     <Compile Include="InitLogic.cs" />
     <Compile Include="InterfaceObserver.cs" />
