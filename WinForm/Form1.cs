@@ -23,10 +23,7 @@ namespace WinForm
         int progresWork = 0;
         public void Update(ISubject subject)
         {
-            if (backgroundWorker1.IsBusy != true)
-            {
-                backgroundWorker1.RunWorkerAsync();
-            }
+            
             if ((subject as WorkClass).SortCompleted)
             {
                 backgroundWorker1.CancelAsync();
@@ -253,11 +250,12 @@ namespace WinForm
         }
         private void startSortBT_Click(object sender, EventArgs e)
         {
+            backgroundWorker1.RunWorkerAsync();
             //workProgram.StartSortMethod(sortersListBox.SelectedIndex);
-            
-             
-            sortTrhread = new Thread(new ParameterizedThreadStart(SortStart));
-            sortTrhread.Start(sortersListBox.SelectedIndex);
+
+
+            //sortTrhread = new Thread(new ParameterizedThreadStart(SortStart));
+            //sortTrhread.Start(sortersListBox.SelectedIndex);
             //Thread sortTrhread;
             //sortTrhread  = new Thread(new ParameterizedThreadStart(StartSort));
             //sortTrhread.Start(sortersListBox.SelectedIndex);
@@ -321,13 +319,14 @@ namespace WinForm
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            workProgram.StartSortMethod(sortersListBox.SelectedIndex);
             //SortStart( worker,  e);
             //SortStart(worker);
 
             //SortStart();
             while (true)
             {
-                if (backgroundWorker1.CancellationPending == true)
+                if (worker.CancellationPending == true)
                 {
                     e.Cancel = true;
                     break;
