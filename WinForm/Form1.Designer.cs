@@ -67,6 +67,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.Exit_bt = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btStop = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -377,6 +378,15 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+            // btStop
+            // 
+            this.btStop.BackColor = System.Drawing.Color.DimGray;
+            resources.ApplyResources(this.btStop, "btStop");
+            this.btStop.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btStop.Name = "btStop";
+            this.btStop.UseVisualStyleBackColor = false;
+            this.btStop.Click += new System.EventHandler(this.btStop_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -385,6 +395,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             resources.ApplyResources(this, "$this");
             this.ControlBox = false;
+            this.Controls.Add(this.btStop);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -457,6 +468,7 @@
         private System.Windows.Forms.ToolStripMenuItem моваToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox languageToolStripMenuItem2;
         public System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button btStop;
     }
 }
 

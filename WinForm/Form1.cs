@@ -32,8 +32,7 @@ namespace WinForm
             {
                 flagUpdate = true;
                 progresWork = (subject as WorkClass).progres;
-                
-                //this.Refresh();
+                backgroundWorker1.ReportProgress(progresWork);
             }
             
         }       
@@ -57,8 +56,6 @@ namespace WinForm
         }
         void Init()
         {
-            //languageToolStripMenuItem2.SelectedIndex = 1; 
-            //worker = new BackgroundWorker1;
             workProgram.Attach(this);
             sortersListBox.Items.Add("Start all");
             string[] names = workProgram.GetNamesMethods();
@@ -67,9 +64,7 @@ namespace WinForm
                 sortersListBox.Items.Add(name);
             }
             sortersListBox.SelectedIndex = 0;
-
             InitFromList.SelectedIndex = 0;
-
         }
         private void ChangeLanguage(string lang)
         {
@@ -81,8 +76,8 @@ namespace WinForm
             }
         }
 
-        private const int cGrip = 30;      // Grip size
-        private const int cCaption = 30;   // Caption bar height;
+        private const int cGrip = 30;      
+        private const int cCaption = 30;   
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -96,17 +91,17 @@ namespace WinForm
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == 0x84)
-            {  // Trap WM_NCHITTEST
+            {  
                 Point pos = new Point(m.LParam.ToInt32());
                 pos = this.PointToClient(pos);
                 if (pos.Y < cCaption)
                 {
-                    m.Result = (IntPtr)2;  // HTCAPTION
+                    m.Result = (IntPtr)2; 
                     return;
                 }
                 if (pos.X >= this.ClientSize.Width - cGrip && pos.Y >= this.ClientSize.Height - cGrip)
                 {
-                    m.Result = (IntPtr)17; // HTBOTTOMRIGHT
+                    m.Result = (IntPtr)17; 
                     return;
                 }
             }
@@ -238,30 +233,21 @@ namespace WinForm
             if(workProgram.arrayInited)
             {
                 workProgram.SaveToDB();
-            }
-            
+            }           
         }
-        Thread sortTrhread;
-        void SortStart(object obj)
+        
+        int SortStart(int index)
         {
-
-            //sortTrhread.Start(sortersListBox.SelectedIndex);
-            workProgram.StartSortMethod((int)obj);
+            workProgram.StartSortMethod(index);
+            return 1;
         }
         private void startSortBT_Click(object sender, EventArgs e)
         {
-            backgroundWorker1.RunWorkerAsync();
-            //workProgram.StartSortMethod(sortersListBox.SelectedIndex);
-
-
-            //sortTrhread = new Thread(new ParameterizedThreadStart(SortStart));
-            //sortTrhread.Start(sortersListBox.SelectedIndex);
-            //Thread sortTrhread;
-            //sortTrhread  = new Thread(new ParameterizedThreadStart(StartSort));
-            //sortTrhread.Start(sortersListBox.SelectedIndex);
-            //workProgram.SelectSortMethod(sortersListBox.SelectedIndex);
-
-            //ShowArray();
+            if(!backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.RunWorkerAsync(sortersListBox.SelectedIndex);
+                initBt.Enabled= false;
+            }            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -291,7 +277,6 @@ namespace WinForm
 
         private void languageToolStripMenuItem2_SelectedItemChanged(object sender, EventArgs e)
         {
-            
             if (languageToolStripMenuItem2.SelectedItem.ToString() == "English")
             {
                 ChangeLanguage("en");
@@ -319,42 +304,34 @@ namespace WinForm
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
-            workProgram.StartSortMethod(sortersListBox.SelectedIndex);
-            //SortStart( worker,  e);
-            //SortStart(worker);
-
-            //SortStart();
-            while (true)
+            if (SortStart((int)e.Argument) == 0 || worker.CancellationPending == true)
             {
-                if (worker.CancellationPending == true)
-                {
-                    e.Cancel = true;
-                    break;
-                }
-                if (flagUpdate)
-                {
-                    flagUpdate = false;
-                    backgroundWorker1.ReportProgress(progresWork);
-                }
-            }
+               
+            }        
+            e.Cancel = true;   
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             toolStripProgressBar1.Value = e.ProgressPercentage;
+           
             //ShowArray();
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //backgroundWorker1.Dispose();
             ShowArray();
+            initBt.Enabled = true;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-
             workProgram.ChangeSpeedEvent(trackBar1.Value);
+        }
+
+        private void btStop_Click(object sender, EventArgs e)
+        {
+            backgroundWorker1. CancelAsync();
         }
     }
 }

@@ -42,6 +42,7 @@ namespace QuickSorterNS
         }
         public void Sort(int[] data, int len)
         {
+            if (delay == 100) { return; };
             int lenD = len;
             int pivot = 0;
             int ind = lenD / 2;
@@ -69,10 +70,10 @@ namespace QuickSorterNS
                 }
                 Sort(l, j);
                 Sort(r, k);
-
+ System.Threading.Thread.Sleep(delay/10);
                 for (int cnt = 0; cnt < lenD; cnt++)
                 {
-                    System.Threading.Thread.Sleep(delay);
+                   
                     if (cnt < j)
                     {
                         data[cnt] = l[cnt]; ;

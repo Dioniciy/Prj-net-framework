@@ -143,12 +143,13 @@ namespace WorkClassNS
                 obj.Sort();
             }
         }
-        public void StartSortMethod(int num)
+        public int StartSortMethod(int num)
         {
-            if (!arrayInited) { return; }
-            if (num > sortersList.Count) { return; }
+            if (!arrayInited) { return 0; }
+            if (num > sortersList.Count) { return 0; }
            
             SortCompleted = false;
+            progres = 0;    
             Notify();
             int[] buff_arr = new int[lng * height];
             for (int j = 0; j < height; j++)
@@ -202,6 +203,7 @@ namespace WorkClassNS
                 }
             }
             SortCompleted = true;
+            return 1;
         }
 
         public string[,] GetDataAsStringArray()
