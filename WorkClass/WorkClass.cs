@@ -27,6 +27,7 @@ namespace WorkClassNS
         public bool arrayInited = false;
         public bool arraySizeEntered;
         public bool SortCompleted;
+        public bool SwapActived = false;
         public int progres = 0;
         public string[] outArgs;
         ServerLogic server = new ServerLogic();
@@ -36,7 +37,7 @@ namespace WorkClassNS
         public static event SetSpeedEvent setSpeedEvente;
         public int useData;
         private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
+        public SwapIndexArgsClass swapArgs = new SwapIndexArgsClass(0, 0);
         public int GetHeight() { return (int)height; }
         public int GetLengh() { return (int)lng; }
         public void SetSize(int height, int lng) { this.lng = lng; this.height = height; }
@@ -52,7 +53,13 @@ namespace WorkClassNS
             }
             return _instance;
         }
-            
+        void SwapIvent(SwapIndexArgsClass args)
+        {
+            SwapActived = true;
+            swapArgs = args;
+            Notify();
+            SwapActived = false;
+        }
         public void Attach(IObserver observer)
         {
             this._observers.Add(observer);
@@ -84,6 +91,7 @@ namespace WorkClassNS
             foreach(ISorter sorter in sortersList)
             {
                 sorter.Attach(SortersProgresEvents);
+                sorter.SwapEvent += SwapIvent;
                 setSpeedEvente += sorter.SetSpeed;
             }
 

@@ -1,0 +1,5 @@
+xcopy /s /i "C:\Users\denysly\source\repos\Prj-net-framework\MergeSorter\bin\Debug\MergeSorter.dll" "C:\Users\denysly\source\repos\Prj-net-framework\dll"
+xcopy /s /i "C:\Users\denysly\source\repos\Prj-net-framework\BubbleSorter\bin\Debug\BubbleSorter.dll" "C:\Users\denysly\source\repos\Prj-net-framework\dll"
+xcopy /s /i "C:\Users\denysly\source\repos\Prj-net-framework\QuickSorter\bin\Debug\QuickSorter.dll" "C:\Users\denysly\source\repos\Prj-net-framework\dll"
+xcopy /s /i "C:\Users\denysly\source\repos\Prj-net-framework\SelectionSorter\bin\Debug\SelectionSorter.dll" "C:\Users\denysly\source\repos\Prj-net-framework\dll"
+xcopy /s /i "C:\Users\denysly\source\repos\Prj-net-framework\InsertionSorter\bin\Debug\InsertionSorter.dll" "C:\Users\denysly\source\repos\Prj-net-framework\dll"

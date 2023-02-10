@@ -12,6 +12,7 @@ namespace InsertionSorterNS
         bool finished = false;
         int progres = 0;
         event Notify ProcessCompleted;
+        public event SwapDelegate SwapEvent;
         public void Attach(Notify observer)
         {
             ProcessCompleted += observer;
@@ -25,7 +26,17 @@ namespace InsertionSorterNS
         {
             this.delay = delay;
         }
+        void Swap(int src, int dst)
+        {
+            int buffer = data[dst];
+            data[dst] = data[src];
+            data[src] = buffer;
 
+            if (SwapEvent != null)
+            {
+                SwapEvent.Invoke(new SwapIndexArgsClass(src, dst));
+            }
+        }
 
         public void Sort()
         {
@@ -49,6 +60,7 @@ namespace InsertionSorterNS
                     data[i + 1] = data[i];
                     i = i - 1;
                     data[i + 1] = key;
+                    Swap(i, i);
                 }
             }
             Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");

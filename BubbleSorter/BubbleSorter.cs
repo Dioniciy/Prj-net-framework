@@ -12,6 +12,8 @@ namespace BubbleSorterNS
         bool finished = false;
         int progres = 0;
         event Notify ProcessCompleted;
+        public event SwapDelegate SwapEvent;
+
         public void Attach(Notify observer)
         {
             ProcessCompleted += observer;
@@ -24,6 +26,17 @@ namespace BubbleSorterNS
         public void SetSpeed(int delay)
         {
             this.delay = delay;
+        }
+        void Swap(int src, int dst)
+        {
+            int buffer = data[dst];
+            data[dst] = data[src];
+            data[src] = buffer;
+
+            if (SwapEvent != null)
+            {
+                SwapEvent.Invoke(new SwapIndexArgsClass(src, dst));
+            }
         }
         public void Sort()
         {
@@ -41,14 +54,13 @@ namespace BubbleSorterNS
                     progres += 10;
                     OnProcessUpdate();
                 }
-                System.Threading.Thread.Sleep(delay);
+                
                 for (int j = (lenD - 1); j >= (i + 1); j--)
                 {
                     if (data[j] < data[j - 1])
                     {
-                        tmp = data[j];
-                        data[j] = data[j - 1];
-                        data[j - 1] = tmp;
+                        Swap(j-1, j);
+                        System.Threading.Thread.Sleep(delay);
                     }
                 }
             }
@@ -62,9 +74,8 @@ namespace BubbleSorterNS
         {
             return "Bubble sorter";
         }
-        protected virtual void OnProcessUpdate() //protected virtual method
+        protected virtual void OnProcessUpdate() 
         {
-            //if ProcessCompleted is not null then call delegate
             if (ProcessCompleted != null)
             {
                 ProcessCompleted?.Invoke(progres, finished);

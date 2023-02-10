@@ -1,6 +1,7 @@
 ﻿using ISorterNS;
 using System;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace SelectionSorterNS
 {
@@ -11,6 +12,7 @@ namespace SelectionSorterNS
         bool finished = false;
         int progres = 0;
         event Notify ProcessCompleted;
+        public event SwapDelegate SwapEvent;
         int delay;
         public void Attach(Notify observer)
         {
@@ -25,6 +27,17 @@ namespace SelectionSorterNS
         {
             this.delay = delay;
         }
+        void Swap(int src, int dst)
+        {
+            int buffer = data[dst];
+            data[dst] = data[src];
+            data[src] = buffer;
+
+            if (SwapEvent != null)
+            {
+                SwapEvent.Invoke(new SwapIndexArgsClass(src, dst));
+            }
+        }
         public void Sort()
         {
             finished = false;
@@ -33,7 +46,7 @@ namespace SelectionSorterNS
             timer.Start();
             //Console.WriteLine(Show() + " start");
             int j = 0;
-            int tmp = 0;
+            
             
             for (int i = 0; i < lenD; i++)
             {
@@ -52,9 +65,7 @@ namespace SelectionSorterNS
                         j = k;
                     }
                 }
-                tmp = data[i];
-                data[i] = data[j];
-                data[j] = tmp;
+                Swap(i, j);
             }
            // Console.WriteLine(Show() + $" complete after {timer.ElapsedMilliseconds} ");
             timer.Stop();

@@ -12,6 +12,7 @@ namespace QuickSorterNS
         bool finished = false;
         int progres = 0;
         event Notify ProcessCompleted;
+        public event SwapDelegate SwapEvent;
         public void Attach(Notify observer)
         {
             ProcessCompleted += observer;
@@ -25,6 +26,7 @@ namespace QuickSorterNS
         {
             this.delay = delay;
         }
+
         public void Sort()
         {
             finished = false;

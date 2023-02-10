@@ -12,15 +12,19 @@ using WorkClassNS;
 using System.Xml.Linq;
 using System.Globalization;
 using System.Threading;
+using ISorterNS;
 
 namespace WinForm
 {
+    
     public partial class Form1 : Form, IObserver
     {
 
         WorkClass workProgram = WorkClass.GetInstance();
         bool flagUpdate = false;
         int progresWork = 0;
+        
+        indexses some = new indexses();
         public void Update(ISubject subject)
         {
             
@@ -30,9 +34,25 @@ namespace WinForm
             }
             else
             {
+                if((subject as WorkClass).SwapActived)
+                {
+                    if(some.flagReadyBackup == false) { some.flagReadyBackup = true; }
+                    else
+                    {
+                        some.SetBackup();
+                    }
+                    some.index1 = (subject as WorkClass).swapArgs.firstElement/workProgram.GetLengh() ;
+                    some.index2 = (subject as WorkClass).swapArgs.firstElement - (workProgram.GetLengh() * some.index1);
+
+                    some.index3 = (subject as WorkClass).swapArgs.secondElement / workProgram.GetLengh();
+                    some.index4 = (subject as WorkClass).swapArgs.secondElement  -( workProgram.GetLengh()  * some.index3);
+                    
+                    
+                }
                 flagUpdate = true;
                 progresWork = (subject as WorkClass).progres;
-                backgroundWorker1.ReportProgress(progresWork);
+
+                backgroundWorker1.ReportProgress(progresWork,some);
             }
             
         }       
@@ -245,8 +265,9 @@ namespace WinForm
         {
             if(!backgroundWorker1.IsBusy)
             {
+                some.Clear();
                 backgroundWorker1.RunWorkerAsync(sortersListBox.SelectedIndex);
-                initBt.Enabled= false;
+                initBt.Enabled= false;          
             }            
         }
 
@@ -314,7 +335,17 @@ namespace WinForm
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             toolStripProgressBar1.Value = e.ProgressPercentage;
-           
+
+            //dataGridView[5,0].Selected = true;
+            
+            if((e.UserState as indexses).flagHaveBackup )
+            {
+                dataGridView[(e.UserState as indexses).BackIndex2, (e.UserState as indexses).BackIndex1].Selected = false;
+                dataGridView[(e.UserState as indexses).BackIndex4, (e.UserState as indexses).BackIndex3].Selected = false;
+            }
+            dataGridView[(e.UserState as indexses).index2, (e.UserState as indexses).index1].Selected = true;
+            dataGridView[(e.UserState as indexses).index4, (e.UserState as indexses).index3].Selected = true;
+            
             //ShowArray();
         }
 
@@ -332,6 +363,27 @@ namespace WinForm
         private void btStop_Click(object sender, EventArgs e)
         {
             backgroundWorker1. CancelAsync();
+        }
+    }
+    public class indexses
+    {
+        public int index1 = 0, index2 = 0, index3 = 0, index4 = 0;
+        public bool flagReadyBackup = false;
+        public bool flagHaveBackup = false;
+        public int BackIndex1 = 0, BackIndex2 = 0, BackIndex3 = 0, BackIndex4 = 0;
+        public void SetBackup() { BackIndex1 = index1; BackIndex2 = index2; BackIndex3 = index3; BackIndex4 = index4; flagHaveBackup = true; }
+        public void Clear()
+        {
+            BackIndex1 = 0;
+            BackIndex2 = 0;
+            BackIndex3 = 0;
+            BackIndex4 = 0;
+            index1 = 0;
+            index2 = 0;
+            index3 = 0;
+            index4 = 0;
+            flagHaveBackup = false;
+            flagReadyBackup = false;
         }
     }
 }
