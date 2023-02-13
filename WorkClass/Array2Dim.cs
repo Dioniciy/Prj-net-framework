@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorkClassNS
 {
-    public class ArrayTwoDimensional
+    public class DataForBD
     {
         public int Id { get; set; }
         public int Lng { get; set; }

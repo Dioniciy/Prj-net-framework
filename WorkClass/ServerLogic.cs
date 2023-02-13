@@ -14,9 +14,9 @@ namespace WorkClassNS
             : base("DbConnection")
         { }
 
-        public DbSet<ArrayTwoDimensional> Arrays { get; set; }
+        public DbSet<DataForBD> Arrays { get; set; }
     }
-    internal class ServerLogic
+    public partial class WorkClass
     {
         public void SaveToDB(int[,] array, int height, int lng)
         {
@@ -31,19 +31,19 @@ namespace WorkClassNS
             }
             using (ArrayContext db = new ArrayContext())
             {
-                ArrayTwoDimensional data = new ArrayTwoDimensional { Data = arr_str, Height = (int)height, Lng = (int)lng };
+                DataForBD data = new DataForBD { Data = arr_str, Height = (int)height, Lng = (int)lng };
                 db.Arrays.Add(data);
                 db.SaveChanges();
             }
         }
-        public ArrayTwoDimensional ReadFromDB()
+        public DataForBD ReadFromDB()
         {
             using (ArrayContext db = new ArrayContext())
             {
                 db.Database.CreateIfNotExists();
                 db.Database.Initialize(false);
-                DbSet<ArrayTwoDimensional> arrays = db.Arrays;
-                foreach (ArrayTwoDimensional u in arrays)
+                DbSet<DataForBD> arrays = db.Arrays;
+                foreach (DataForBD u in arrays)
                 {
                     return u;
                 }

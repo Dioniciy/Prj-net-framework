@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WorkClassNS
 {
-    internal class FileLogic
+    public partial class WorkClass
     {
         string path = "./input data.txt";
         public string[] ReadFile()

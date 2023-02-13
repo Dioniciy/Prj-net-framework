@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WorkClassNS
 {
-    internal class ReflexionLogic
+    public partial class WorkClass
     {
         List<ISorter> sortersL = new List<ISorter>();
         public List<ISorter> LoadMethods()

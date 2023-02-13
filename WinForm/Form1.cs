@@ -21,7 +21,7 @@ namespace WinForm
     {
 
         WorkClass workProgram = WorkClass.GetInstance();
-        bool flagUpdate = false;
+        //bool flagUpdate = false;
         int progresWork = 0;
         
         indexses some = new indexses();
@@ -49,7 +49,7 @@ namespace WinForm
                     
                     
                 }
-                flagUpdate = true;
+                //flagUpdate = true;
                 progresWork = (subject as WorkClass).progres;
 
                 backgroundWorker1.ReportProgress(progresWork,some);
@@ -150,7 +150,7 @@ namespace WinForm
                         catch(Exception) { arrayNums[i, j] = "0"; }
                     }
                 }
-                workProgram.init.InitArray(arrayNums, dataGridView.Rows.Count - 1, dataGridView.Columns.Count);
+                workProgram.InitArray(arrayNums, dataGridView.Rows.Count - 1, dataGridView.Columns.Count);
             }          
             workProgram.StartInitMethod(InitFromList.SelectedIndex);
             ShowArray();
@@ -352,6 +352,7 @@ namespace WinForm
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             ShowArray();
+            toolStripProgressBar1.Value = toolStripProgressBar1.Maximum;
             initBt.Enabled = true;
         }
 

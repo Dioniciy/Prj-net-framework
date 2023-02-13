@@ -7,19 +7,10 @@ using System.Threading.Tasks;
 
 namespace WorkClassNS
 {
-    public class InitLogic
-    {
-        int height;
-        int lng;
-        bool arrayInited;
-        ServerLogic server = new ServerLogic();
-        int[,] array = new int[1000,1000] ;
+    public partial class WorkClass
+    {     
+       
         
-        public InitLogic( )
-        {
-     
-        }
-        FileLogic myFile = new FileLogic();
         Random rnd = new Random();
         public void GetData(ref int[,]buff, ref int _height, ref int _lng)
         {
@@ -66,7 +57,7 @@ namespace WorkClassNS
         public bool InitFromFile()
         {
 
-            string[] buff = myFile.ReadFile();
+            string[] buff = ReadFile();
             if (buff != null)
             {
 
@@ -93,7 +84,7 @@ namespace WorkClassNS
         public bool  InitFromRandomData()
         {
             lng = (int)rnd.Next(2, 100);
-            height = (int)rnd.Next(2, 20);
+            height = (int)rnd.Next(2, 50);
             //workClass.SetSize(height, lng);
             for (int i = 0; i < height; i++)
             {
@@ -149,7 +140,7 @@ namespace WorkClassNS
 
         public bool InitFromDB()
         {
-            ArrayTwoDimensional u = server.ReadFromDB();
+            DataForBD u = ReadFromDB();
             if (u != null)
             {
                return InitArray(u.Data.Split(' '), u.Height, u.Lng);

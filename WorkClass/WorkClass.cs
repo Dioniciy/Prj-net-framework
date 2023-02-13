@@ -18,7 +18,7 @@ using System.ComponentModel;
 
 namespace WorkClassNS
 {
-    public class WorkClass: ISubject
+    public partial class WorkClass: ISubject
     {
         List<ISorter> sortersList;//= new List<ISorter>();
         int lng;
@@ -30,9 +30,9 @@ namespace WorkClassNS
         public bool SwapActived = false;
         public int progres = 0;
         public string[] outArgs;
-        ServerLogic server = new ServerLogic();
-        public InitLogic init = new InitLogic();
-        ReflexionLogic reflex = new ReflexionLogic();
+        //ServerLogic server = new ServerLogic();
+        //public InitLogic init = new InitLogic();
+        //ReflexionLogic reflex = new ReflexionLogic();
         public delegate void SetSpeedEvent(int delay);
         public static event SetSpeedEvent setSpeedEvente;
         public int useData;
@@ -98,7 +98,7 @@ namespace WorkClassNS
         }
         void LoadSorters()
         {
-            sortersList = reflex.LoadMethods();
+            sortersList = LoadMethods();
             AddSorterssIvents();
 
         }
@@ -116,7 +116,7 @@ namespace WorkClassNS
         
         public void SaveToDB()
         {           
-            server.SaveToDB(array, (int)height, (int)lng);
+            SaveToDB(array, (int)height, (int)lng);
         }
         public void StartInitMethod(int useData)
         {
@@ -126,20 +126,20 @@ namespace WorkClassNS
                     //InitFromConsole(array);
                     break;
                 case 1:
-                    arrayInited = init.InitFromFile();
+                    arrayInited = InitFromFile();
                     break;
                 case 2:
-                    arrayInited = init.InitFromRandomData();
+                    arrayInited = InitFromRandomData();
                     break;
                 case 3:
-                    arrayInited = init.InitFromDB();
+                    arrayInited = InitFromDB();
                     break;
                 case 4:
-                    arrayInited = init.InitFromArguments(outArgs);
+                    arrayInited = InitFromArguments(outArgs);
                     break;
 
             }
-            init.GetData(ref array, ref height, ref lng);
+            GetData(ref array, ref height, ref lng);
         }
         
    
